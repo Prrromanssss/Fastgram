@@ -1,4 +1,12 @@
+# autopep8==2.0.0
 asgiref==3.5.2
 Django==3.2.16
 pytz==2022.6
-sqlparse==0.4.3
+# flake8==5.0.4
+# flake8-absolute-import==1.0.0.1
+# flake8-builtins==2.0.1
+# flake8-import-order==0.18.1
+# flake8-quotes==3.3.1
+# flake8-tidy-imports==4.8.0
+# flake8-variables-names==0.0.5
+# pep8-naming==0.13.2
