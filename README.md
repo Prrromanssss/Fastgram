@@ -1,6 +1,6 @@
-# Instagram
+# Fastgram
 
-![flake8 tests](https://github.com/Prrromanssss/Instagram-django/actions/workflows/flake8-linter.yml/badge.svg)
+![flake8 tests](https://github.com/Prrromanssss/Fastgram/actions/workflows/flake8-linter.yml/badge.svg)
 
 
 
@@ -11,7 +11,7 @@
 
 1.1 Run this command
 ```commandline
-git clone https://github.com/Prrromanssss/Instagram-django.git
+git clone https://github.com/Prrromanssss/Fastgram.git
 ```
 
 ### 2. Creation and activation venv
