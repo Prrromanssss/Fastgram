@@ -8,10 +8,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'not-so-secret')
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-print(DEBUG)
+# print(DEBUG)
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'users/login/'
+LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,6 +22,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'homepage.apps.HomepageConfig',
+    'users.apps.UsersConfig',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -105,3 +110,10 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static_dev'
 ]
 STATIC_ROOT = BASE_DIR / 'static'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
+
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
+
+AUTH_USER_MODEL = 'users.CustomUser'

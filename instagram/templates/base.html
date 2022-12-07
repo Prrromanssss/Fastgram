@@ -15,24 +15,25 @@
     <link
       rel="apple-touch-icon"
       sizes="120x120"
-      href="{% static 'icons/apple-touch-icon.png' %}">
+      href="{% static 'favicons/apple-touch-icon.png' %}">
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="{% static 'icons/favicon-32x32.png' %}">
+      href="{% static 'favicons/favicon-32x32.png' %}">
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="{% static 'icons/favicon-16x16.png' %}">
+      href="{% static 'favicons/favicon-16x16.png' %}">
     <link
       rel="manifest"
-      href="{% static 'icons/site.webmanifest' %}">
+      href="{% static 'favicons/site.webmanifest' %}">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
   </head>
-  <body>
+
+  <body style="background: #444444; color: #d9d9d9">
     {% include "includes/header.html" %}
     <main>
         {% block content %}Контент не подвезли{% endblock content %}
