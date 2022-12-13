@@ -8,8 +8,6 @@ class CustomUserCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['password2'].help_text = None
         self.fields['password1'].help_text = None
-        # print(self.fields['password1']., 1)
-        # self.fields['username'].help_text = None
         for field in self.visible_fields():
             field.field.widget.attrs['class'] = 'form-control'
 

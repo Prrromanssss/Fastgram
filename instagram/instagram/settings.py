@@ -8,7 +8,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'not-so-secret')
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# print(DEBUG)
 
 ALLOWED_HOSTS = []
 

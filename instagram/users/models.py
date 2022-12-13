@@ -22,14 +22,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         'почта',
         unique=True,
     )
-    # password1 = models.CharField(
-    #     'пароль',
-    #     max_length=128
-    # )
-    # password2 = models.CharField(
-    #     'Подтвердите пароль',
-    #     max_length=128
-    # )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -41,10 +33,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(
         'ник',
         max_length=150,
-        unique=True
+        unique=True,
     )
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'nickname'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
