@@ -22,6 +22,8 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'users/login/'
+LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -31,7 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
+    'users.apps.UsersConfig',
     'feedback.apps.FeedbackConfig',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -95,7 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -121,4 +125,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
+AUTH_USER_MODEL = 'users.CustomUser'
+
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@yandex.ru')
+
