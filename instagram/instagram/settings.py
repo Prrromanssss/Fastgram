@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
+    'feedback.apps.FeedbackConfig',
 ]
 
 MIDDLEWARE = [
@@ -116,3 +117,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static_dev'
 ]
 STATIC_ROOT = BASE_DIR / 'static'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
+
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@yandex.ru')
