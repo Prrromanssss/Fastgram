@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
-
 from users.managers import CustomUserManager
 
 
@@ -30,13 +29,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-    nickname = models.CharField(
-        'ник',
-        max_length=150,
-        unique=True,
-    )
 
-    USERNAME_FIELD = 'nickname'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
