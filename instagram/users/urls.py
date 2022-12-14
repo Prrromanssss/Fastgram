@@ -78,5 +78,15 @@ urlpatterns = [
         'sign_up/',
         local_views.SignUpView.as_view(),
         name='sign_up'
+    ),
+    path(
+        'profile/',
+        local_views.ProfileView.as_view(),
+        name='profile'
+    ),
+    path(
+        'profile_change/',
+        local_views.ProfileChangeView.as_view(),
+        name='profile_change'
     )
 ]
