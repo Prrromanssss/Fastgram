@@ -7,11 +7,13 @@
 {% block content %}
 <div class="container p-4">
     <h1 class="my-4 text-white">Профиль</h1>
-    <div>
-        {% include 'users/includes/profile_change_form.html' %}
-    </div>
-    <div class="mx-4">
-        <a href={% url 'users:profile' %} class="btn btn-dark mx-1 text-light">Назад</a>
+    <div class="mx-4 justify-content-center">
+        <form method="post" >
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-dark mx-1 text-light">Принять</button>
+            <a href={% url 'users:profile' %} class="btn btn-dark mx-1 text-light d-inline-block">Назад</a>
+        </form>        
     </div>
 </div>
 {% endblock %}
