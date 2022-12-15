@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
     'feedback.apps.FeedbackConfig',
+    'comments.apps.CommentsConfig',
     'widget_tweaks',
 ]
 
@@ -128,4 +129,3 @@ EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@yandex.ru')
-

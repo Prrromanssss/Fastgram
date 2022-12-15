@@ -6,24 +6,24 @@
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <img src={% static 'img/mainicon.png' %} class="bi me-2" width="52" height="44" role="img" aria-label="Bootstrap"></img>
         </a>
-
+        {% with request.resolver_match.view_name as view_name %}
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          {% with request.resolver_match.view_name as view_name %}
-            <li><a href="{% url 'homepage:home' %}" class="nav-link px-2 {% if view_name == 'homepage:home' %} text-secondary disabled {% else %} text-white {% endif %}">О нас</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Доставки</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Отзывы</a></li>
-            <li><a href="{% url 'feedback:feedback' %}" class="nav-link px-2 {% if view_name == 'feedback:feedback' %} text-secondary disabled {% else %} text-white {% endif %}">Обратная связь</a></li>
-          {% endwith %}
+          <li><a href="{% url 'homepage:home' %}" class="nav-link px-2 {% if view_name == 'homepage:home' %} text-secondary disabled {% else %} text-white {% endif %}">О нас</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Доставки</a></li>
+          <li><a href="{% url 'comments:list_comments' %}" class="nav-link px-2 {% if view_name == 'comments:list_comments' %} text-secondary disabled {% else %} text-white {% endif %}">Отзывы</a></li>
+          <li><a href="{% url 'feedback:feedback' %}" class="nav-link px-2 {% if view_name == 'feedback:feedback' %} text-secondary disabled {% else %} text-white {% endif %}">Обратная связь</a></li>
         </ul>
-
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Search">
-        </form>
-
+        {% if view_name == 'comments:list_comments' %}
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Search">
+          </form>
+        {% endif %}
+        
         <div class="text-end">
           <button type="button" class="btn btn-outline-light me-2" style="color: #26ded2">Вход</button>
           <button type="button" class="btn btn-outline-light me-2" style="color: #26ded2">Регистрация</button>
         </div>
+        {% endwith %}
       </div>
     </div>
 </header>
