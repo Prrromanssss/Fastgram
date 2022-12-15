@@ -23,5 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls', namespace='users')),
     path('feedback/', include('feedback.urls', namespace='feedback')),
-    path('comments/', include('comments.urls', namespace='comments')),
+    path('response/', include('response.urls', namespace='response')),
 ]
