@@ -6,7 +6,6 @@
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <img src={% static 'img/mainicon.png' %} class="bi me-2" width="52" height="44" role="img" aria-label="Bootstrap"></img>
         </a>
-
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           {% with request.resolver_match.view_name as view_name %}
             <li><a href="{% url 'homepage:home' %}" class="nav-link px-2 {% if view_name == 'homepage:home' %} text-secondary disabled {% else %} text-white {% endif %}">О нас</a></li>
@@ -21,8 +20,13 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2" style="color: #26ded2">Вход</button>
-          <button type="button" class="btn btn-outline-light me-2" style="color: #26ded2">Регистрация</button>
+          {% if user.is_authenticated %}
+            <a href={% url 'users:profile' %} class="btn btn-outline-light me-2" style="color: #26ded2">Профиль</a>
+            <a href={% url 'users:logout' %} class="btn btn-dark mx-1 text-light"> Выйти </a>
+          {% else %}
+            <button type="button" class="btn btn-outline-light me-2" style="color: #26ded2">Вход</button>
+            <button type="button" class="btn btn-outline-light me-2" style="color: #26ded2">Регистрация</button>
+          {% endif %}
         </div>
       </div>
     </div>
