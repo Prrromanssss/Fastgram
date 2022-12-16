@@ -7,8 +7,9 @@
         <title>DjangoGram</title>
     {% endblock %}
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block add_css_link %}{% endblock add_css_link %}
     <link
       rel="stylesheet"
       href="{% static 'css/footer.css' %}">
@@ -36,12 +37,10 @@
     <meta name="theme-color" content="#ffffff">
   </head>
 
-  <body style="background: #444444; color: #d9d9d9">
+  <body class="p-0 m-0" style="background: #444444; color: #d9d9d9; width: 100%; height: 100%">
 
     {% include "includes/header.html" %}
-    <main>
-        {% block content %}Контент не подвезли{% endblock content %}
-    </main>
+    {% block content %}Контент не подвезли{% endblock content %}
     {% include "includes/footer.html" %}
 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
