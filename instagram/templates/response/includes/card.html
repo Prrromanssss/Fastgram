@@ -1,0 +1,60 @@
+<div class="container mt-3">
+    {% with request.resolver_match.view_name as view_name %}
+        {% if view_name == 'response:list_responses' %}
+            {% ifchanged %}
+                  <br>
+                  <h4>Пользователь: {{ response.user.email }}</h4>
+            {% endifchanged %}
+        {% else %}
+        {% endif %}
+    {% endwith %}
+  
+  <div class="card mb-3">
+      {% with request.resolver_match.view_name as view_name %}
+          {% if view_name != 'response:list_responses' %}
+              <div class="card-header">Пользователь: {{ response.user.email }}</div>
+          {% endif %}
+      {% endwith %}
+  
+    <div class="card-body text-dark">
+      <h5 class="card-title">{{ response.name }}</h5>
+        Курьерская служба: {{ response.delivery.name }}
+          {% with request.resolver_match.view_name as view_name %}
+              {% comment %} {% if view_name == 'response:response_detail' %}        
+                  {% load thumbnail %}
+                      {% thumbnail item.mainimage.image "300x300" crop="center" as im %}
+                          <img src="{{ im.url }}"
+                              width="{{ im.width }}"
+                              height="{{ im.height }}"
+                              class="rounded float-end"
+                              alt="Картинка товара">
+                      {% endthumbnail %}
+                  {{ item.text|safe}}
+                       <div>
+                          <a href="{% url 'catalog:item_list' %}">Обратно к списку товаров</a>
+                          {% if number %}
+                              <p>Средняя оценка товара: {{ average }}; Количество оценок: {{ number }}</p>
+                          {% endif %}
+                          {% if user.is_authenticated %}
+                              {% if grade %}
+                              <p>Ваша оценка: {{ grade.first }}</p>
+                              {% endif %}
+                                  <form method="POST">
+                                      {% csrf_token %}
+                                      <button type="submit" class="btn btn-dark ">
+                                          Оценить
+                                      </button>
+                                      {{ form.grade }}          
+                                  </form>
+                          {% endif %}
+                       </div>
+              {% else %} {% endcomment %}
+                  {{ response.text|safe|truncatewords:10 }}
+                  <br>
+                  {% comment %} <p><a href="{% url 'catalog:item_detail' item.id %}">Перейти к товару</a></p> {% endcomment %}
+              {% comment %} {% endif %} {% endcomment %}
+          {% endwith %}
+    </div>
+  </div>
+  </div>
+  

@@ -1,10 +1,13 @@
 from ckeditor.fields import RichTextField
 from core.models import ImageBaseModel, IsPublishedBaseModel, NameBaseModel
 from django.db import models
+from response.managers import ResponseManager
 from users.models import CustomUser
 
 
 class Response(NameBaseModel):
+    objects = ResponseManager()
+
     delivery = models.ForeignKey(
         'Delivery',
         verbose_name='курьерская служба',

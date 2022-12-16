@@ -19,21 +19,22 @@ class ResponseAdmin(admin.ModelAdmin):
     list_display = (
         'small_image_tmb',
         'name',
-        # 'delivery_name',
+        'delivery_name',
     )
     list_display_links = ('name',)
     fields = (
         'name',
         'delivery',
         'text',
+        'user',
     )
     inlines = [
         MainImageInline,
     ]
 
-    def category_name(self, obj):
-        return obj.category.name
-    category_name.short_description = 'категория'
+    def delivery_name(self, obj):
+        return obj.delivery.name
+    delivery_name.short_description = 'курьерская служба'
 
     def small_image_tmb(self, obj):
         if obj.mainimage:
