@@ -4,12 +4,15 @@
 <html lang="en">
   <head>
     {% block title %}
-        <title>DjangoGram</title>
+        <title>Fastgram</title>
     {% endblock %}
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block add_css_link %}{% endblock add_css_link %}
+    <link
+      rel="stylesheet",
+      href="{% static 'css/list_responses.css' %}">
     <link
       rel="stylesheet"
       href="{% static 'css/footer.css' %}">

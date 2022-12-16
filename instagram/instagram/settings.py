@@ -22,6 +22,10 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 LOGIN_URL = 'users/login/'
 LOGIN_REDIRECT_URL = '/'
 
@@ -35,7 +39,12 @@ INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
     'feedback.apps.FeedbackConfig',
+    'response.apps.ResponseConfig',
+    'django_cleanup.apps.CleanupConfig',
+    'sorl.thumbnail',
+    'ckeditor',
     'widget_tweaks',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -46,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'instagram.urls'
@@ -115,6 +125,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
 
 STATIC_URL = '/static_dev/'
 STATICFILES_DIRS = [
@@ -128,4 +140,3 @@ EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@yandex.ru')
-
