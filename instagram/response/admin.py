@@ -22,12 +22,6 @@ class ResponseAdmin(admin.ModelAdmin):
         'delivery_name',
     )
     list_display_links = ('name',)
-    fields = (
-        'name',
-        'delivery',
-        'text',
-        'user',
-    )
     inlines = [
         MainImageInline,
     ]
