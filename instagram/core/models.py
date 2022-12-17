@@ -68,7 +68,7 @@ class ImageBaseModel(models.Model):
     def response_name(self):
         return self.response.name
 
-    response_name.short_description = 'товар'
+    response_name.short_description = 'отзыв'
 
     def sorl_delete(**kwargs):
         delete(kwargs['file'])
