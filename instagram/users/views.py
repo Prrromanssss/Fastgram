@@ -1,10 +1,22 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
-from django.shortcuts import render, redirect
-
-from users.forms import CustomUserCreationForm, CustomUserChangeForm
+from django.views.generic import FormView
+from users.forms import CustomUserChangeForm, CustomUserCreationForm
 from users.models import CustomUser
+
+
+class CustomLoginView(LoginView):
+    def get(self, request):
+        form = self.get_form()
+        if request.user.is_authenticated:
+            template_name = 'users/user_already_login.html'
+        else:
+            template_name = 'users/login.html'
+        context = {'form': form}
+        return render(request, template_name, context)
 
 
 class SignUpView(FormView):
@@ -19,13 +31,8 @@ class SignUpView(FormView):
         return super().form_valid(form)
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, FormView):
     template_name = 'users/profile.html'
-
-
-# Не особо понял что к чему тут должно быть в этих ваших классах
-class ProfileChangeView(FormView):
-    template_name = 'users/profile_change.html'
     model = CustomUser
     form_class = CustomUserChangeForm
     success_url = reverse_lazy('users:profile')
