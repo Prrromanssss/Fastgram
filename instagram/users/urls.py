@@ -1,13 +1,11 @@
 from django.conf import settings
-from django.contrib.auth.views import (LoginView, LogoutView,
-                                       PasswordChangeDoneView,
+from django.contrib.auth.views import (LogoutView, PasswordChangeDoneView,
                                        PasswordChangeView,
                                        PasswordResetCompleteView,
                                        PasswordResetConfirmView,
                                        PasswordResetDoneView,
                                        PasswordResetView)
 from django.urls import path, reverse_lazy
-
 from users import views as local_views
 
 app_name = 'users'
@@ -15,9 +13,7 @@ app_name = 'users'
 urlpatterns = [
     path(
         'login/',
-        LoginView.as_view(
-            template_name='users/login.html',
-        ),
+        local_views.CustomLoginView.as_view(),
         name='login'
     ),
     path(
@@ -84,9 +80,4 @@ urlpatterns = [
         local_views.ProfileView.as_view(),
         name='profile'
     ),
-    path(
-        'profile_change/',
-        local_views.ProfileChangeView.as_view(),
-        name='profile_change'
-    )
 ]
