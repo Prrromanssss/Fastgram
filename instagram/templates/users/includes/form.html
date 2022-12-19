@@ -2,9 +2,8 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <form method="post" >
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
             {% for field in form %}
                 <div class="form-group col-sm-5 mx-auto mb-2">                            
                     {{ field.label_tag }}

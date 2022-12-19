@@ -15,7 +15,7 @@
       href="{% static 'css/list_responses.css' %}">
     <link
       rel="stylesheet"
-      href="{% static 'css/footer.css' %}">
+      href="{% static 'css/base.css' %}">
     <link
       rel="stylesheet"
       href="{% static 'css/bootstrap.min.css' %}">
@@ -38,6 +38,7 @@
       href="{% static 'favicons/site.webmanifest' %}">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+
   </head>
 
   <body class="p-0 m-0" style="background: #444444; color: #d9d9d9; width: 100%; height: 100%">
@@ -45,7 +46,6 @@
     {% include "includes/header.html" %}
     {% block content %}Контент не подвезли{% endblock content %}
     {% include "includes/footer.html" %}
-
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

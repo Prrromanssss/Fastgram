@@ -31,7 +31,7 @@ class NameBaseModel(models.Model):
 class ImageBaseModel(models.Model):
     image = models.ImageField(
         'изображение к отзыву',
-        upload_to='previews/%Y/%m/%d',
+        upload_to='images/%Y/%m/%d',
     )
 
     class Meta:
@@ -80,7 +80,7 @@ class ImageUserBaseModel(models.Model):
     image = models.ImageField(
         'аватарка',
         upload_to='previews/%Y/%m/%d',
-        default='blank-avatar.jpeg',
+        default='blank_avatar.jpeg',
     )
 
     class Meta:

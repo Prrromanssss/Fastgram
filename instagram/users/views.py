@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from users.forms import CustomUserChangeForm, CustomUserCreationForm
@@ -25,24 +25,27 @@ class ProfileView(LoginRequiredMixin, FormView):
     form_class = CustomUserChangeForm
     success_url = reverse_lazy('users:profile')
 
-    def get(self, request):
-        form = self.form_class(
-            initial=self.initial,
-            instance=request.user,
-        )
-        context = {'form': form, 'user': request.user}
-        return render(request, self.template_name, context)
-
     def post(self, request):
         form = self.form_class(
             request.POST or None,
+            request.FILES,
             instance=request.user,
         )
 
         if form.is_valid():
+            file = form.cleaned_data['image']
+            if file:
+                FileSystemStorage().save(file.name, file)
             self.model.objects.filter(id=request.user.id).update(
                 **form.cleaned_data,
             )
-            return redirect(self.get_success_url())
-        context = {'form': form, 'user': request.user}
-        return render(request, self.template_name, context)
+
+        return super().post(self, request)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class(
+            initial=self.initial,
+            instance=self.request.user,
+        )
+        return context
