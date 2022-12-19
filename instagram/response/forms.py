@@ -3,6 +3,7 @@ from response.models import Response
 
 
 class ResponseForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
@@ -14,9 +15,10 @@ class ResponseForm(forms.ModelForm):
             Response.name.field.name,
             Response.delivery.field.name,
             Response.text.field.name,
+            Response.grade.field.name,
         )
         widgets = {
             'text': forms.Textarea(attrs={
                 'rows': 5,
-            })
+            }),
         }

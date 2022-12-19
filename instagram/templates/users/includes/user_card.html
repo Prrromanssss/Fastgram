@@ -1,24 +1,21 @@
-<div class="row">
-    <div class="col-3">
+<div class="container-xxl bd-gutter">
+    <div class="col-md-8 mx-auto text-center mt-3">
+        {% load thumbnail %}
+        {% thumbnail user.image "200x200" crop="center" as im %}
+            <img src="{{ im.url }}"
+                width="{{ im.width }}"
+                height="{{ im.height }}"
+                class="rounded-circle z-depth-0"
+                alt="Картинка к отзыву">
+        {% endthumbnail %}
+    </div>
         <ul>
-            <li class="list-group-item m-2">Email:</li>
+            <li class="list-group-item m-2">Email: {{ user.email }}</li>
             {% if user.first_name %}
-                <li class="list-group-item m-2">Имя:</li>
+                <li class="list-group-item m-2">Имя: {{ user.first_name }}</li>
             {% endif %}
             {% if user.last_name %}
-                <li class="list-group-item m-2">Фамилия:</li>
+                <li class="list-group-item m-2">Фамилия: {{ user.last_name }}</li>
             {% endif %}
         </ul>
     </div>
-    <div class="col-4">
-        <ul>
-            <li class="list-group-item m-2">{{ user.email }}</li>
-            {% if user.first_name %}
-                <li class="list-group-item m-2">{{ user.first_name }}</li>
-            {% endif %}
-            {% if user.last_name %}
-                <li class="list-group-item m-2">{{ user.last_name }}</li>
-            {% endif %}
-        </ul>
-    </div>
-</div>

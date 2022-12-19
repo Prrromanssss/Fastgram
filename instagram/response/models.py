@@ -12,7 +12,7 @@ class Response(NameBaseModel):
         'Delivery',
         verbose_name='курьерская служба',
         on_delete=models.CASCADE,
-        help_text='Выберите курьерскую служба',
+        help_text='Выберите курьерскую службу',
     )
     text = RichTextField(
         'описание',
@@ -30,6 +30,18 @@ class Response(NameBaseModel):
         related_name='user_response',
     )
 
+    class Grades(models.IntegerChoices):
+        NEGATIVE = 1, 'Отрицательная'
+        NORMAL = 2, 'Нейтральная'
+        POSITIVE = 3, 'Положительная'
+
+    grade = models.IntegerField(
+        'оценка',
+        choices=Grades.choices,
+        blank=True,
+        null=True,
+    )
+
     class Meta:
         verbose_name = 'отзыв'
         verbose_name_plural = 'отзывы'
@@ -40,6 +52,14 @@ class Delivery(NameBaseModel, IsPublishedBaseModel):
         'вес',
         default=100,
         help_text='Максимум 32767',
+    )
+
+    another_link = models.URLField(
+        'другие отзывы',
+        max_length=200,
+        null=True,
+        blank=True,
+        help_text='Добавьте ссылку на сайт с отзывами об этой службе',
     )
 
     class Meta:

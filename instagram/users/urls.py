@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.contrib.auth.views import (LogoutView, PasswordChangeDoneView,
+from django.contrib.auth.views import (LoginView, LogoutView,
+                                       PasswordChangeDoneView,
                                        PasswordChangeView,
                                        PasswordResetCompleteView,
                                        PasswordResetConfirmView,
@@ -13,7 +14,9 @@ app_name = 'users'
 urlpatterns = [
     path(
         'login/',
-        local_views.CustomLoginView.as_view(),
+        LoginView.as_view(
+            template_name='users/login.html',
+        ),
         name='login'
     ),
     path(

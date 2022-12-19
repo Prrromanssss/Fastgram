@@ -74,3 +74,47 @@ class ImageBaseModel(models.Model):
         delete(kwargs['file'])
 
     cleanup_pre_delete.connect(sorl_delete)
+
+
+class ImageUserBaseModel(models.Model):
+    image = models.ImageField(
+        'аватарка',
+        upload_to='previews/%Y/%m/%d',
+        default='blank-avatar.jpeg',
+    )
+
+    class Meta:
+        abstract = True
+
+    @property
+    def get_img(self):
+        return get_thumbnail(self.image, '300x300', crop='center', quality=51)
+
+    def image_tmb(self):
+        if self.image:
+            return mark_safe(
+                f'<img src="{self.get_img.url}" '
+            )
+        return 'Нет аватарки'
+
+    image_tmb.short_description = 'аватарка'
+    image_tmb.allow_tags = True
+
+    @property
+    def get_small_img(self):
+        return get_thumbnail(self.image, '50x50', crop='center', quality=51)
+
+    def small_image_tmb(self):
+        if self.image:
+            return mark_safe(
+                f'<img src="{self.get_small_img.url}" '
+            )
+        return 'Нет аватарки'
+
+    small_image_tmb.short_description = 'аватарка'
+    small_image_tmb.allow_tags = True
+
+    def sorl_delete(**kwargs):
+        delete(kwargs['file'])
+
+    cleanup_pre_delete.connect(sorl_delete)

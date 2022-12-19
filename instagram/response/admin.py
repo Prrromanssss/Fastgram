@@ -9,7 +9,7 @@ class MainImageInline(admin.TabularInline):
 
 @admin.register(Delivery)
 class DeliveryAdmin(admin.ModelAdmin):
-    fields = ('name', 'is_published', 'weight')
+    fields = ('name', 'is_published', 'weight', 'another_link')
     list_display = ('name', 'is_published')
     list_editable = ('is_published',)
 

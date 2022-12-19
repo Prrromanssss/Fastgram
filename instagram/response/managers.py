@@ -13,6 +13,7 @@ class ResponseManager(models.Manager):
                 'name',
                 'text',
                 'delivery__name',
+                'delivery__another_link',
                 'mainimage__image',
                 'user__email',
             )
