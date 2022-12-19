@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
+
 {% load static %}
+
 {% block title %}
-    <title>Маршрут от точки на карте</title>
+  <title>Маршрут от точки на карте</title>
 {% endblock title %}
+
 {% block add_css_link %}
     <link rel="stylesheet" href={% static "css/route_panel_control.css" %}>
 {% endblock add_css_link %}
+
 {% block content %}
     <h1 class="text-center mt-3 ">Сравнение стоимости доставки</h1>
     <div class="delivery_map" id="map"></div>
