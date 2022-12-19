@@ -1,5 +1,5 @@
 """
-ASGI config for instagram project.
+ASGI config for fastgram project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

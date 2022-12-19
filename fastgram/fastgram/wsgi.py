@@ -1,5 +1,5 @@
 """
-WSGI config for instagram project.
+WSGI config for fastgram project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
