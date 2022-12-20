@@ -1,3 +1,5 @@
+import datetime as dt
+
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import FileSystemStorage
@@ -35,6 +37,12 @@ class ProfileView(LoginRequiredMixin, FormView):
         if form.is_valid():
             file = form.cleaned_data['image']
             if file:
+                print(file)
+                file.name = (
+                    f'previews/{dt.datetime.now().strftime("%Y/%m/%d")}/'
+                    f'{file.name}'
+                )
+                print(file.name)
                 FileSystemStorage().save(file.name, file)
             self.model.objects.filter(id=request.user.id).update(
                 **form.cleaned_data,

@@ -12,6 +12,7 @@ class ResponseManager(models.Manager):
             .only(
                 'name',
                 'text',
+                'created_on',
                 'delivery__name',
                 'delivery__another_link',
                 'mainimage__image',
