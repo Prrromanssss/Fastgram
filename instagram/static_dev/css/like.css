@@ -1,0 +1,10 @@
+.image {
+    width: 25px;
+    height: 25px;
+}
+
+.block{
+    width: min-content;
+    height: min-content;
+    white-space: nowrap;
+}

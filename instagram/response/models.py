@@ -30,6 +30,12 @@ class Response(NameBaseModel):
         related_name='user_response',
     )
 
+    likes = models.ManyToManyField(
+        CustomUser,
+        verbose_name='лайк',
+        blank=True,
+    )
+
     class Meta:
         verbose_name = 'отзыв'
         verbose_name_plural = 'отзывы'
