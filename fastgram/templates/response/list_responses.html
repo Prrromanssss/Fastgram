@@ -5,86 +5,10 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container d-flex-row mx-sm-4 mb-3 mt-3">
-  <h2 class="container">Размещайте свои отзывы по доставкам здесь</h2>
-  {% if user.is_authenticated %}
-    <button
-      type="button"
-      class="btn btn-dark text-nowrap"
-      data-bs-toggle="modal"
-      data-bs-target="#modal-cart">
-      Добавить отзыв
-    </button>
-    <div
-      class="modal fade"
-      id="modal-cart"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Ваш отзыв
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body text-dark">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-dark mx-sm-3 w-25 ">
-                    Опубликовать
-                </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endif %}
-</div>
+{% include 'response/includes/add_response.html' %}
 <hr>
 {% for response in page_obj %}
     {% include 'response/includes/card.html' %}
 {% endfor %}
-
-<ul class="nav justify-content-center pagination">
-  {% if page_obj.has_previous %}
-    <li class="page-item">
-      <a class="page-link rounded-start"
-         href="?page={{ page_obj.previous_page_number }}">&laquo;
-      </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link"
-         href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}
-      </a>
-    </li>
-  {% endif %}
-  <li class="page-item active">
-    <a class="page-link
-       {% if not page_obj.has_previous %} rounded-start
-       {% elif not page_obj.next_page_number%} rounded-end
-       {% endif %}">
-       <span class="current">{{ page_obj.number }}</span>
-    </a>
-  </li>
-  {% if page_obj.has_next %}
-    <li class="page-item">
-      <a class="page-link"
-      href="?page={{ page_obj.next_page_number }}" >{{ page_obj.next_page_number }}
-      </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link rounded-end"
-      href="?page={{ page_obj.next_page_number }}">&raquo;
-      </a>
-    </li>
-  {% endif %}
-</ul>
+{% include 'response/includes/pagination.html' %}
 {% endblock %}

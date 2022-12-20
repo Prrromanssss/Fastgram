@@ -6,8 +6,6 @@ from users.models import CustomUser
 
 
 class Response(NameBaseModel):
-    objects = ResponseManager()
-
     delivery = models.ForeignKey(
         'Delivery',
         verbose_name='курьерская служба',
@@ -41,6 +39,8 @@ class Response(NameBaseModel):
         blank=True,
         null=True,
     )
+
+    objects = ResponseManager()
 
     class Meta:
         verbose_name = 'отзыв'

@@ -32,6 +32,7 @@ class ImageBaseModel(models.Model):
     image = models.ImageField(
         'изображение к отзыву',
         upload_to='images/%Y/%m/%d',
+        blank=True,
     )
 
     class Meta:
