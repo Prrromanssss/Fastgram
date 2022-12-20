@@ -44,11 +44,11 @@ pip install -r requirements.txt
 5.1 To make migrations run this command
 
 ```commandline
-python instagram/manage.py makemigrations
+python fastgram/manage.py makemigrations
 ```
 5.2 To apply your migrations run this command
 ```commandline
-python instagram/manage.py migrate
+python fastgram/manage.py migrate
 ```
 
 ### 6. Database setup
