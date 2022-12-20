@@ -64,23 +64,3 @@ class MainImage(ImageBaseModel):
     class Meta:
         verbose_name = 'изображение'
         verbose_name_plural = 'изображения'
-
-
-# class Likes(models.Model):
-#     user = models.ForeignKey(
-#         CustomUser,
-#         on_delete=models.CASCADE
-#     )
-#     response = models.ForeignKey(
-#         Response,
-#         on_delete=models.CASCADE
-#     )
-
-#     class Meta:
-#         verbose_name = 'лайк'
-#         verbose_name_plural = 'лайки'
-
-#     # @property
-#     # def items_count(self):
-#     #     id =
-#     #     return Likes.objects.filter.count()
