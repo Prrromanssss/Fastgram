@@ -1,8 +1,7 @@
-import datetime as dt
+import os
 
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from users.forms import CustomUserChangeForm, CustomUserCreationForm
@@ -33,21 +32,12 @@ class ProfileView(LoginRequiredMixin, FormView):
             request.FILES,
             instance=request.user,
         )
-
         if form.is_valid():
-            file = form.cleaned_data['image']
-            if file:
-                print(file)
-                file.name = (
-                    f'previews/{dt.datetime.now().strftime("%Y/%m/%d")}/'
-                    f'{file.name}'
-                )
-                print(file.name)
-                FileSystemStorage().save(file.name, file)
-            self.model.objects.filter(id=request.user.id).update(
-                **form.cleaned_data,
-            )
-
+            old_image = CustomUser.objects.get(id=request.user.id).image
+            image_path = old_image.path
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            form.save()
         return super().post(self, request)
 
     def get_context_data(self, **kwargs):

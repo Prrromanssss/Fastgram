@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'feedback.apps.FeedbackConfig',
     'response.apps.ResponseConfig',
+    'delivery.apps.DeliveryConfig',
     'django_cleanup.apps.CleanupConfig',
     'sorl.thumbnail',
     'ckeditor',
