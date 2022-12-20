@@ -33,7 +33,7 @@ class Response(NameBaseModel):
     likes = models.ManyToManyField(
         CustomUser,
         verbose_name='лайк',
-        blank=True
+        blank=True,
     )
 
     class Meta:
