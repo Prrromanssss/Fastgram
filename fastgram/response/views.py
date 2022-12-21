@@ -63,7 +63,7 @@ class ListResponsesView(ListView, FormView):
         return super().form_valid(form)
 
 
-class LikeResponse(FormView):
+class LikeResponseView(FormView):
     model = Response
     success_url = reverse_lazy('response:list_responses')
 
@@ -84,3 +84,11 @@ class LikeResponse(FormView):
 class ResponseDetailView(DetailView):
     model = Response
     template_name = 'response/response_detail.html'
+
+    def get_success_url(self, **kwargs):
+        if kwargs is not None:
+            return reverse_lazy(
+                'response:response_detail',
+                kwargs={'pk': kwargs['pk']}
+            )
+        return reverse_lazy('response:response_detail')

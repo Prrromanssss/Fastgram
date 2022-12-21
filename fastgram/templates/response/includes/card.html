@@ -30,11 +30,20 @@
                   alt="Картинка к отзыву">
             {% endthumbnail %}
             {% with request.resolver_match.view_name as view_name %}
-              {% if response.text|slice:":3" != '<p>' %}
-                <p>{{ response.text|safe|truncatewords:40 }}</p>
+              {% if view_name == 'response:response_detail' %}
+                {{ response.text|safe }}
+                <p><a href="{% url 'response:list_responses' %}" class="btn btn-dark" style="color: #26ded2">Назад</a></p>
               {% else %}
-                  {{ response.text|safe|truncatewords:40 }}
+                {% if response.text|slice:":3" != '<p>' %}
+                  <p>{{ response.text|safe|truncatewords:40 }}</p>
+                {% else %}
+                    {{ response.text|safe|truncatewords:40 }}
+                {% endif %}
+                {% if response.text|length > 40 %}
+                  <p><a href="{% url 'response:response_detail' response.id %}" class="btn btn-dark" style="color: #26ded2">Читать больше...</a></p>
+                {% endif %}
               {% endif %}
+                
             {% endwith %}
           <p><a href="{{ response.delivery.another_link }}">
             Вы можете ознакомиться с другими отзывами об этой службе
@@ -54,4 +63,3 @@
       </div>
     </div>
 </div>
-  
