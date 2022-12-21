@@ -1,6 +1,5 @@
 from django import forms
-<<<<<<< HEAD:fastgram/response/forms.py
-from response.models import MainImage, Response
+from response.models import Comment, MainImage, Response
 
 
 class MainImageForm(forms.ModelForm):
@@ -14,9 +13,6 @@ class MainImageForm(forms.ModelForm):
         fields = (
             MainImage.image.field.name,
         )
-=======
-from response.models import Response, Comment
->>>>>>> 6aed3a901438afc0b634a3569a406f99fa535e0b:instagram/response/forms.py
 
 
 class ResponseForm(forms.ModelForm):

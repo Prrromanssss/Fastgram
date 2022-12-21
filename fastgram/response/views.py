@@ -13,8 +13,8 @@ class ListResponsesView(ListView, FormView):
     form_image_class = MainImageForm
     template_name = 'response/list_responses.html'
     get_queryset = Response.objects.list_responses
-    object_list = get_queryset()
     paginate_by = 5
+    success_url = reverse_lazy('response:list_responses')
 
     def get_queryset(self):
         queryset = Response.objects.list_responses()
@@ -37,14 +37,6 @@ class ListResponsesView(ListView, FormView):
             self.request.FILES,
         )
         return context
-
-    def get_success_url(self):
-        success_url = reverse_lazy('response:list_responses')
-        if 'page' in self.request.GET:
-            self.object_list = self.get_queryset()
-            context = self.get_context_data()
-            success_url += f'?page={context["paginator"].num_pages}'
-        return success_url
 
     def form_valid(self, form):
         image_form = self.form_image_class(

@@ -52,18 +52,18 @@
         {% if page_obj %}
           <form
             action={% if 'response_detail' in request.path %} 
-                   {% url 'response:like' response_id=response.id page_number=page_number is_detail=True %}
+                   {% url 'response:like' response_id=response.id page_number=page_obj.number is_detail=True %}
                    {% else %}
-                   {% url 'response:like' response_id=response.id page_number=page_number is_detail=False %}
+                   {% url 'response:like' response_id=response.id page_number=page_obj.number is_detail=False %}
                    {% endif %}
             method="post"
             class="d-inline-block">
         {% else %}
           <form
           action={% if 'response_detail' in request.path %} 
-                 {% url 'response:like' response_id=response.id page_number=page_number is_detail=True %}
+                 {% url 'response:like' response_id=response.id page_number=0 is_detail=True %}
                  {% else %}
-                 {% url 'response:like' response_id=response.id page_number=page_number is_detail=False %}
+                 {% url 'response:like' response_id=response.id page_number=0 is_detail=False %}
                  {% endif %}
           method="post"
           class="d-inline-block">

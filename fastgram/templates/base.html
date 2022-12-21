@@ -49,23 +49,17 @@
   </head>
 
   <body class="p-0 m-0" style="background: #444444; color: #d9d9d9; width: 100%; height: 100%">
-<<<<<<< HEAD:fastgram/templates/base.html
-    {% include "includes/header.html" %}
-=======
-
-    <!-- Вот тут миллион конфликтов по веткам может оказаться -->
     <div class="wrapper">
-    {% include "includes/header.html" %}
-    <main role="main" class="flex-shrink-0">{% block content %}Контент не подвезли{% endblock content %}</main>
+      {% include "includes/header.html" %}
+      <main role="main" class="flex-shrink-0">
+        {% block content %}
+        Контент не подвезли
+        {% endblock content %}
+      </main>
     </div>
     {% include "includes/footer.html" %}
->>>>>>> d12c41bee3274d88a8afbfb941b2f136800da3b5:instagram/templates/base.html
 
-    {% block content %}
-    Контент не подвезли
-    {% endblock content %}
-
-    {% include "includes/footer.html" %}
+    
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

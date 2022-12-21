@@ -6,3 +6,7 @@
 .my-footer {
     margin-top: -50px;
 }
+
+.li_active:hover {
+    text-decoration: underline;
+}
