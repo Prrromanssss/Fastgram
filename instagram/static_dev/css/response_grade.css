@@ -3,6 +3,10 @@
     height: 25px;
 }
 
+.button {
+    background-color: transparent;
+}
+
 .block{
     width: min-content;
     height: min-content;

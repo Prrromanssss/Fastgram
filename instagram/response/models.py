@@ -40,6 +40,9 @@ class Response(NameBaseModel):
         verbose_name = 'отзыв'
         verbose_name_plural = 'отзывы'
 
+    def get_likes(self):
+        return self.likes.only('id')
+
 
 class Delivery(NameBaseModel, IsPublishedBaseModel):
     weight = models.PositiveSmallIntegerField(
@@ -64,3 +67,20 @@ class MainImage(ImageBaseModel):
     class Meta:
         verbose_name = 'изображение'
         verbose_name_plural = 'изображения'
+
+
+class Comments(models.Model):
+    text = RichTextField(
+        'текст',
+        help_text='Напишите свой комментарий'
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='пользователь',
+        on_delete=models.CASCADE,
+    )
+    response = models.ForeignKey(
+        Response,
+        verbose_name='отзыв',
+        on_delete=models.CASCADE
+    )
