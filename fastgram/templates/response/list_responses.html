@@ -10,5 +10,7 @@
 {% for response in page_obj %}
     {% include 'response/includes/card.html' %}
 {% endfor %}
-{% include 'response/includes/pagination.html' %}
+{% if page_obj %}
+  {% include 'response/includes/pagination.html' %}
+{% endif %}
 {% endblock %}

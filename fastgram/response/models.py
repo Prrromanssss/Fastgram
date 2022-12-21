@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 from core.models import ImageBaseModel, IsPublishedBaseModel, NameBaseModel
 from django.db import models
+from django.urls import reverse
 from response.managers import ResponseManager
 from users.models import CustomUser
 
@@ -50,6 +51,10 @@ class Response(NameBaseModel):
     class Meta:
         verbose_name = 'отзыв'
         verbose_name_plural = 'отзывы'
+        ordering = ['-created_on']
+
+    def get_absolute_url(self):
+        return reverse('response:response_detail', kwargs={'pk': self.pk})
 
 
 class Delivery(NameBaseModel, IsPublishedBaseModel):

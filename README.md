@@ -78,6 +78,5 @@ python fastgram/manage.py runserver
 ***
 
 ## ER-diagram
-![Image of the ER-diagram]()
-![Image of the user ER-diagram]()
+![Image of the ER-diagram](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/ER-diagram.png)
 ***

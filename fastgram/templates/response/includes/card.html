@@ -1,3 +1,5 @@
+{% load static %}
+
 {% load thumbnail %}
 
 <div class="container mt-3 text-dark">
@@ -29,14 +31,23 @@
             {% endthumbnail %}
             {% with request.resolver_match.view_name as view_name %}
               {% if response.text|slice:":3" != '<p>' %}
-                <p>{{ response.text|safe|truncatewords:30 }}</p>
+                <p>{{ response.text|safe|truncatewords:40 }}</p>
               {% else %}
-                  {{ response.text|safe|truncatewords:30 }}
+                  {{ response.text|safe|truncatewords:40 }}
               {% endif %}
             {% endwith %}
           <p><a href="{{ response.delivery.another_link }}">
             Вы можете ознакомиться с другими отзывами об этой службе
           <a><p>        
+      </div>
+      <div class="d-inline-block p-1 border-top border-end border-2 border-dark block">
+        <form action={% url 'response:like' response_id=response.id %} method="post" class="d-inline-block">
+            {% csrf_token %}
+            <button type="submit" class="border-0">
+              <img class="image" src={% static 'img/like.jpg' %} alt="Лайк!">
+            </button>
+        </form>
+        <div class="text-black d-inline-block">{{ response.likes.count }}</div>
       </div>
       <div class="card-footer text-dark">
         {{ response.created_on }}

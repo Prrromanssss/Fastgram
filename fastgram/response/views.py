@@ -1,6 +1,7 @@
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import FormView, ListView
+from django.views.generic import DetailView, FormView, ListView
 from response.forms import MainImageForm, ResponseForm
 from response.models import MainImage, Response
 
@@ -12,7 +13,22 @@ class ListResponsesView(ListView, FormView):
     form_image_class = MainImageForm
     template_name = 'response/list_responses.html'
     get_queryset = Response.objects.list_responses
+    object_list = get_queryset()
     paginate_by = 5
+
+    def get_queryset(self):
+        queryset = Response.objects.list_responses()
+        searched = self.request.GET.get('searched', '')
+        if searched:
+            queryset = (
+                queryset.
+                filter(
+                    Q(name__contains=searched)
+                    | Q(delivery__name__contains=searched)
+                    | Q(text__contains=searched)
+                    )
+                )
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,7 +72,6 @@ class LikeResponse(FormView):
             id=response_id,
         )
         like = response.filter(likes=request.user).first()
-
         if like:
             like.likes.remove(request.user)
         else:
@@ -64,3 +79,8 @@ class LikeResponse(FormView):
             response.first().save()
 
         return redirect(self.get_success_url())
+
+
+class ResponseDetailView(DetailView):
+    model = Response
+    template_name = 'response/response_detail.html'

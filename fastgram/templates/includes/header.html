@@ -27,9 +27,7 @@
               {% else %} li_active text-white {% endif %}">Обратная связь</a></li>
           </ul>
           {% if view_name == 'response:list_responses' %}
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-              <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Search">
-            </form>
+            {% include 'response/includes/search.html' %}
           {% endif %}
         
           <div class="text-end">
