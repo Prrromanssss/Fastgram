@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Лента отзывов</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container d-flex-row mx-sm-4 mb-3 mt-3">
+    <h2 class="container">Размещайте свои отзывы по доставкам здесь</h2>
+      {% include 'response/includes/add_response.html' %}
+</div>
+<hr>
+{% for response in page_obj %}
+    {% include 'response/includes/card.html' %}
+{% endfor %}
+{% if page_obj %}
+  {% include 'response/includes/pagination.html' %}
+{% endif %}
+{% endblock %}

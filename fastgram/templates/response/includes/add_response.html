@@ -1,0 +1,41 @@
+{% if user.is_authenticated %}
+  <button
+    type="button"
+    class="btn btn-dark text-nowrap"
+    data-bs-toggle="modal"
+    data-bs-target="#modal-cart">
+    Добавить отзыв
+  </button>
+  <div
+    class="modal fade"
+    id="modal-cart"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Ваш отзыв
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-dark">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              {{ image_form.as_p }}
+              <button type="submit" class="btn btn-dark mx-sm-3 w-25 ">
+                  Опубликовать
+              </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

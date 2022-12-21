@@ -1,0 +1,14 @@
+.image {
+    width: 25px;
+    height: 25px;
+}
+
+.button {
+    background-color: transparent;
+}
+
+.block{
+    width: min-content;
+    height: min-content;
+    white-space: nowrap;
+}

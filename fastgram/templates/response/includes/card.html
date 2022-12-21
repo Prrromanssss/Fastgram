@@ -1,0 +1,87 @@
+{% load static %}
+{% load thumbnail %}
+
+<div class="container mt-3 text-dark">
+  {% with response.grade as grade %}
+    <div class="card mb-3"
+        style="background:
+        {% if grade == 3 %} lightgreen
+        {% elif grade == 1 %} #FF8080
+        {% endif %};">
+  {% endwith %}
+      <div class="card-header">
+        {% thumbnail response.user.image "32x32" crop="center" as im %}
+          <img src="{{ im.url }}"
+              width="{{ im.width }}"
+              height="{{ im.height }}"
+              class="rounded-circle z-depth-0">
+        {% endthumbnail %}
+        {{ response.user.email }}
+      </div>
+      <div class="card-body text-dark">
+        <h5 class="card-title">{{ response.name }}</h5>
+          <em> Курьерская служба: </em>{{ response.delivery.name }}
+            {% thumbnail response.mainimage.image "200x200" crop="center" as im %}
+              <img src="{{ im.url }}"
+                  width="{{ im.width }}"
+                  height="{{ im.height }}"
+                  class="rounded float-end"
+                  alt="Картинка к отзыву">
+            {% endthumbnail %}
+            {% with request.resolver_match.view_name as view_name %}
+              {% if view_name == 'response:response_detail' %}
+                {{ response.text|safe }}
+                <p><a href="{% url 'response:list_responses' %}" class="btn btn-dark" style="color: #26ded2">Назад</a></p>
+              {% else %}
+                {% if response.text|slice:":3" != '<p>' %}
+                  <p>{{ response.text|safe|truncatewords:40 }}</p>
+                {% else %}
+                    {{ response.text|safe|truncatewords:40 }}
+                {% endif %}
+                {% if response.text|length > 40 %}
+                  <p><a href="{{ response.get_absolute_url }}" class="btn btn-dark" style="color: #26ded2">Читать больше...</a></p>
+                {% endif %}
+              {% endif %}
+                
+            {% endwith %}
+          <p><a href="{{ response.delivery.another_link }}">
+            Вы можете ознакомиться с другими отзывами об этой службе
+          <a><p>        
+      </div> 
+      <div class="d-inline-block p-1 mx-2 block">
+        {% if page_obj %}
+          <form
+            action={% if 'response_detail' in request.path %} 
+                   {% url 'response:like' response_id=response.id page_number=page_obj.number is_detail=True %}
+                   {% else %}
+                   {% url 'response:like' response_id=response.id page_number=page_obj.number is_detail=False %}
+                   {% endif %}
+            method="post"
+            class="d-inline-block">
+        {% else %}
+          <form
+          action={% if 'response_detail' in request.path %} 
+                 {% url 'response:like' response_id=response.id page_number=0 is_detail=True %}
+                 {% else %}
+                 {% url 'response:like' response_id=response.id page_number=0 is_detail=False %}
+                 {% endif %}
+          method="post"
+          class="d-inline-block">
+        {% endif %}
+
+            {% csrf_token %}
+            <button type="submit" class="border-0 button">
+              {% if user in response.get_likes %}
+                <img class="image" src={% static 'img/like_red.png' %} alt="Лайк!">
+              {% else %}
+                <img class="image" src={% static 'img/like.png' %} alt="Лайк!">
+              {% endif %}
+            </button>
+        </form>
+        <div class="text-black d-inline-block">{{ response.likes.count }}</div>
+      </div>
+      <div class="card-footer text-dark">
+        {{ response.created_on }}
+      </div>
+    </div>
+</div>

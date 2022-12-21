@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Профиль</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Профиль</h1>
+    {% include 'users/includes/user_card.html'%}
+    <div class="container mx-sm-4 mb-3 mt-3">
+    <a href="{% url 'users:password_change' %}" class="btn btn-dark mx-sm-3">Сменить пароль</a>
+    <button
+      type="button"
+      class="btn btn-dark"
+      data-bs-toggle="modal"
+      data-bs-target="#modal-cart"
+    >
+      Редактировать Данные
+    </button>
+    <div
+      class="modal fade"
+      id="modal-cart"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl text-dark">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Редактирование профиля
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            {% include 'users/includes/form.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+{% endblock %}

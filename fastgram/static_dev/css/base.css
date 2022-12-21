@@ -1,0 +1,12 @@
+.wrapper {
+    min-height: 100%;
+    padding-bottom: 100px;
+}
+
+.my-footer {
+    margin-top: -50px;
+}
+
+.li_active:hover {
+    text-decoration: underline;
+}

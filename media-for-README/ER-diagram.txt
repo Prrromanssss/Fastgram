@@ -1,0 +1,57 @@
+feedback_feedback
+-
+ID integer pk
+name varchar(150)
+mail varchar(254)
+text text
+created_on datetime
+
+response_delivery
+-
+ID integer pk
+name varchar(150)
+weight smallint
+is_published bool
+another_link varchar(200)
+
+response_mainimage
+-
+ID integer pk
+response_id bigint FK >- response_response.ID
+image varchar(100)
+
+response_response
+-
+ID integer pk
+name varchar(150)
+text text
+created_on datetime
+delivery_id bigint FK >- response_delivery.ID
+user_id bigint FK >- users_cutomuser.ID
+grade integer
+
+users_cutomuser
+-
+ID integer pk
+password varchar(128)
+last_login datetime
+is_superuser bool
+first_name varchar(150)
+last_name varchar(150)
+email varchar(254)
+is_staff bool
+is_active bool
+date_joined datetime
+image varchar(100)
+
+users_customuser_groups
+-
+ID integer pk
+customuser_id bigint FK >- users_cutomuser.ID
+group_id integer fk
+
+users_customuser_user_permissions
+-
+ID integer pk
+customuser_id bigint FK >- users_cutomuser.ID
+permission_id integer fk

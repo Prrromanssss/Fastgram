@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Маршрут от точки на карте</title>
+{% endblock title %}
+
+{% block content %}
+<h1 class="text-center mt-3"> Стоимость доставки </h1>
+<p class="text-center">Заполните форму для получения стоимости доставки</p>
+<form method="post" >
+  {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group col-sm-4 mx-auto mb-2">                          
+        {{ field.label_tag }}
+        {{ field }}
+        {{ field.message.id }}
+        {% if field.help_text %}
+          <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+        {% if field.errors %}
+          <div class="alert alert-danger">
+            {{ field.errors }}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="col text-center">
+      <button type="submit" class="btn btn-dark mx-sm-3">Отправить</button>
+    </div>
+</form>
+{% endblock content %}
