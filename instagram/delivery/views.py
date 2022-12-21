@@ -30,7 +30,9 @@ class DeliveryView(FormView):
         if form.is_valid():
             return redirect(self.get_success_url())
         else:
-            return redirect('delivery:delivery')
+            return render(request, 'delivery/show_deliveries.html',
+                          {'args_l_post': [],
+                           'args_cse': []})
 
         # return render(request, self.template_name)
 

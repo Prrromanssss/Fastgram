@@ -10,7 +10,7 @@ class Delivery(models.Model):
         area = '4', 'область'
         AA = '5', 'автономный округ'
         AO = '6', 'автономная область'
-        
+
     weight = models.FloatField(
         'вес', validators=[MinValueValidator(0.1), MaxValueValidator(1000)])
     length = models.IntegerField(
