@@ -101,7 +101,7 @@ class MainImage(ImageBaseModel):
 class Comment(models.Model):
     text = RichTextField(
         'текст',
-        help_text='Напишите свой комментарий'
+        help_text='Напишите свой комментарий',
     )
     user = models.ForeignKey(
         CustomUser,
@@ -111,7 +111,7 @@ class Comment(models.Model):
     response = models.ForeignKey(
         Response,
         verbose_name='отзыв',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     class Meta:

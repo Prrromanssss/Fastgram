@@ -48,7 +48,7 @@
             Вы можете ознакомиться с другими отзывами об этой службе
           <a><p>        
       </div> 
-      <div class="d-inline-block p-1 border-top border-end border-2 border-dark block">
+      <div class="d-inline-block p-1 mx-2 block">
         {% if page_obj %}
           <form
             action={% if 'response_detail' in request.path %} 
@@ -68,11 +68,14 @@
           method="post"
           class="d-inline-block">
         {% endif %}
-        
 
             {% csrf_token %}
-            <button type="submit" class="border-0">
-              <img class="image" src={% static 'img/like.jpg' %} alt="Лайк!">
+            <button type="submit" class="border-0 button">
+              {% if user in response.get_likes %}
+                <img class="image" src={% static 'img/like_red.png' %} alt="Лайк!">
+              {% else %}
+                <img class="image" src={% static 'img/like.png' %} alt="Лайк!">
+              {% endif %}
             </button>
         </form>
         <div class="text-black d-inline-block">{{ response.likes.count }}</div>
