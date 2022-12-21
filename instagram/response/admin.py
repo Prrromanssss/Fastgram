@@ -1,5 +1,5 @@
 from django.contrib import admin
-from response.models import Delivery, MainImage, Response
+from response.models import Delivery, MainImage, Response, Comment
 
 
 class MainImageInline(admin.TabularInline):
@@ -40,3 +40,11 @@ class ResponseAdmin(admin.ModelAdmin):
 @admin.register(MainImage)
 class MainImageAdmin(admin.ModelAdmin):
     list_display = ('small_image_tmb', 'response_name')
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'response',
+    )
