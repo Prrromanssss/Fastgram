@@ -36,6 +36,9 @@ class Response(NameBaseModel):
         blank=True,
     )
 
+    def get_likes(self):
+        return self.likes.values('id')
+
     class Meta:
         verbose_name = 'отзыв'
         verbose_name_plural = 'отзывы'

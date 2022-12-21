@@ -29,11 +29,11 @@
           {% endwith %}
     </div>
 
-    <div class="d-inline-block p-1 border-top border-end border-2 border-dark block">
+    <div class="d-inline-block p-1 mx-2 block">
       <form action={% url 'response:like' response_id=response.id %} method="post" class="d-inline-block">
           {% csrf_token %}
-          <button type="submit" class="border-0">
-            <img class="image" src={% static 'img/like.jpg' %} alt="Лайк!">
+          <button type="submit" class="border-0 button">
+            <img class="image" src={% static 'img/like_red.png' %} alt="Лайк!">
           </button>
       </form>
       <div class="text-black d-inline-block">{{ response.likes.count }}</div>

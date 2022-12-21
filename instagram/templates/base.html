@@ -12,6 +12,9 @@
     {% block add_css_link %}{% endblock add_css_link %}
     <link
       rel="stylesheet"
+      href="{% static 'css/base.css' %}">
+    <link
+      rel="stylesheet"
       href="{% static 'css/like.css' %}">
     <link
       rel="stylesheet",
@@ -45,8 +48,11 @@
 
   <body class="p-0 m-0" style="background: #444444; color: #d9d9d9; width: 100%; height: 100%">
 
+    <!-- Вот тут миллион конфликтов по веткам может оказаться -->
+    <div class="wrapper">
     {% include "includes/header.html" %}
-    {% block content %}Контент не подвезли{% endblock content %}
+    <main role="main" class="flex-shrink-0">{% block content %}Контент не подвезли{% endblock content %}</main>
+    </div>
     {% include "includes/footer.html" %}
 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
