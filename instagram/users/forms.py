@@ -5,8 +5,6 @@ from users.models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['password2'].help_text = None
-        self.fields['password1'].help_text = None
         for field in self.visible_fields():
             field.field.widget.attrs['class'] = 'form-control'
 

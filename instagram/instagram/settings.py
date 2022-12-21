@@ -29,6 +29,9 @@ INTERNAL_IPS = [
 LOGIN_URL = 'users/login/'
 LOGIN_REDIRECT_URL = '/'
 
+LOGOUT_URL = 'users/logout'
+LOGOUT_REDIRECT_URL = '/'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

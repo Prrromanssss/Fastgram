@@ -5,35 +5,47 @@
 {% endblock %}
 
 {% block content %}
-<div class="container p-4">
-    <h1 class="m-4 text-white">Профиль</h1>
-    <div class="row">
-        <div class="col-3">
-            <ul>
-                <li class="list-group-item m-2">Email:</li>
-                {% if user.first_name %}
-                    <li class="list-group-item m-2">Имя:</li>
-                {% endif %}
-                {% if user.last_name %}
-                    <li class="list-group-item m-2">Фамилия:</li>
-                {% endif %}
-            </ul>
+    <h1 class="text-center">Профиль</h1>
+    {% include 'users/includes/user_card.html'%}
+    <div class="container mx-sm-4 mb-3 mt-3">
+    <a href="{% url 'users:password_change' %}" class="btn btn-dark mx-sm-3">Сменить пароль</a>
+    <button
+      type="button"
+      class="btn btn-dark"
+      data-bs-toggle="modal"
+      data-bs-target="#modal-cart"
+    >
+      Редактировать Данные
+    </button>
+    <div
+      class="modal fade"
+      id="modal-cart"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl text-dark">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Редактирование профиля
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            {% include 'users/includes/form.html' %}
+          </div>
         </div>
-        <div class="col-4">
-            <ul>
-                <li class="list-group-item m-2">{{ user.email }}</li>
-                {% if user.first_name %}
-                    <li class="list-group-item m-2">{{ user.first_name }}</li>
-                {% endif %}
-                {% if user.last_name %}
-                    <li class="list-group-item m-2">{{ user.last_name }}</li>
-                {% endif %}
-            </ul>
-        </div>
+      </div>
     </div>
-    <div class="mx-4">
-        <a href={% url 'users:profile_change' %} class="btn btn-dark mx-1 text-light">Редактировать Данные</a>
-        <a href={% url 'users:password_change' %} class="btn btn-dark mx-1 text-light">Сменить пароль</a>
-    </div>
+  </div>
+
+
 </div>
+
 {% endblock %}
