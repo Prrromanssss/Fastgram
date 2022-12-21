@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Расчет доставок</title>
+{% endblock title %}
+
+{% block add_css_link %}
+    <link rel="stylesheet" href={% static "css/delivery.css" %}>
+{% endblock add_css_link %}
+
+{% block content %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=40d1649f-0493-4b70-98ba-98533de7710b" type="text/javascript"></script>
+    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <div class='text-center'>
+        <h1>Стоимость доставки</h1>
+        <h3>Компании</h3>
+        <h4 style="color: #26ded2">CSE</h4>
+        <h6>компания специализируется на перевозках опасных грузов</h6>
+        {% if args_cse %}
+            <mark>Все отлично</mark>
+        {% else %}
+            <p class="col-md-6 offset-md-3 alert alert-danger">Возможно, вы сделали ошибки в форме или компания не поддерживает данную доставку</p >
+        {% endif %}
+        <h4 style="color: #26ded2">L-Post</h4>
+        <h6>компания специализируется на доставках с интернет магазинов</h6>
+        {% if args_l_post %}
+            {% for args in args_l_post %}
+                <mark>{{args}}</mark>
+                {% if forloop.first %}
+                    <br />
+                    <br />
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p class="col-md-6 offset-md-3 alert alert-danger">Возможно, вы сделали ошибки в форме или компания не поддерживает данную доставку</p >
+        {% endif %}
+        <h4 style="color: #26ded2" class='mt-3'>Яндекс доставка от двери до двери</h4>
+        <h6>доставка производится на грузовых автомобилях, тариф перевозки - 20 рублей за км</h6>
+    </div>
+    <script src={% static 'js/delivery_yandex.js' %} type="text/javascript"></script>
+    <div id="map"></div> 
+    <div class='text-center pt-3'>
+        <a class="btn btn-large btn-dark" href={% url 'delivery:taxi' %}>Забрать посылку на такси</a>
+    </div>
+    <h5 style="color: #26ded2" class='text-center mt-3 fw-weight-bold'>Посмотреть доставку менее популярных сервисов вы можете здесь</h5>
+    <ul class='text-center'>
+        <li>Калькулятор доставки грузов по России:<a href='https://calculator-dostavki.ru/'>https://calculator-dostavki.ru/</a></li>
+        <li>Калькулятор грузоперевозок по России: <a href='https://vse-dostavki.ru/calc/'>https://vse-dostavki.ru/calc/</a></li>
+    </ul>
+    <div class='text-center pb-3'>
+        <a class="btn btn-large btn-dark" href={% url 'delivery:delivery' %}>Заполнить форму снова</a>
+    </div>
+{% endblock content %}
