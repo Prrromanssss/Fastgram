@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
+    'delivery.apps.DeliveryConfig',
     'feedback.apps.FeedbackConfig',
     'response.apps.ResponseConfig',
     'django_cleanup.apps.CleanupConfig',

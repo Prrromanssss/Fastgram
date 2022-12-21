@@ -3,6 +3,19 @@
     height: 60%;
     padding: 0;
     margin: 20px 0 0 25%;
+    display: block;
+}
+
+#deliverymap {
+    width: 50%;
+    height: 60%;
+    padding: 0;
+    margin: 20px 0 0 20%;
+    display: block;
+}
+
+ul {
+    list-style: none;
 }
 
 html, body {
