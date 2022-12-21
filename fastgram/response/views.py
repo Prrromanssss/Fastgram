@@ -65,9 +65,20 @@ class ListResponsesView(ListView, FormView):
 
 class LikeResponseView(FormView):
     model = Response
-    success_url = reverse_lazy('response:list_responses')
 
-    def post(self, request, response_id):
+    def post(self, request, response_id, page_number, is_detail):
+        is_detail = True if is_detail == 'True' else False
+
+        if is_detail:
+            success_url = reverse_lazy(
+                'response:response_detail',
+                kwargs={'pk': response_id}
+                )
+        elif page_number:
+            success_url = (
+                reverse_lazy('response:list_responses')
+                + f'?page={page_number}'
+                )
         response = self.model.objects.filter(
             id=response_id,
         )
@@ -77,8 +88,7 @@ class LikeResponseView(FormView):
         else:
             response.first().likes.add(request.user)
             response.first().save()
-
-        return redirect(self.get_success_url())
+        return redirect(success_url)
 
 
 class ResponseDetailView(DetailView):

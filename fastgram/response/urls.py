@@ -15,7 +15,8 @@ urlpatterns = [
         name='response_detail'
         ),
     path(
-        'like/<int:response_id>/',
+        'like/<int:response_id>/?page=<int:page_number>/'
+        '?is_detail=<str:is_detail>/',
         views.LikeResponseView.as_view(),
         name='like'
         ),

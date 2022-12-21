@@ -1,5 +1,4 @@
 {% load static %}
-
 {% load thumbnail %}
 
 <div class="container mt-3 text-dark">
@@ -40,7 +39,7 @@
                     {{ response.text|safe|truncatewords:40 }}
                 {% endif %}
                 {% if response.text|length > 40 %}
-                  <p><a href="{% url 'response:response_detail' response.id %}" class="btn btn-dark" style="color: #26ded2">Читать больше...</a></p>
+                  <p><a href="{{ response.get_absolute_url }}" class="btn btn-dark" style="color: #26ded2">Читать больше...</a></p>
                 {% endif %}
               {% endif %}
                 
@@ -48,9 +47,29 @@
           <p><a href="{{ response.delivery.another_link }}">
             Вы можете ознакомиться с другими отзывами об этой службе
           <a><p>        
-      </div>
+      </div> 
       <div class="d-inline-block p-1 border-top border-end border-2 border-dark block">
-        <form action={% url 'response:like' response_id=response.id %} method="post" class="d-inline-block">
+        {% if page_obj %}
+          <form
+            action={% if 'response_detail' in request.path %} 
+                   {% url 'response:like' response_id=response.id page_number=page_number is_detail=True %}
+                   {% else %}
+                   {% url 'response:like' response_id=response.id page_number=page_number is_detail=False %}
+                   {% endif %}
+            method="post"
+            class="d-inline-block">
+        {% else %}
+          <form
+          action={% if 'response_detail' in request.path %} 
+                 {% url 'response:like' response_id=response.id page_number=page_number is_detail=True %}
+                 {% else %}
+                 {% url 'response:like' response_id=response.id page_number=page_number is_detail=False %}
+                 {% endif %}
+          method="post"
+          class="d-inline-block">
+        {% endif %}
+        
+
             {% csrf_token %}
             <button type="submit" class="border-0">
               <img class="image" src={% static 'img/like.jpg' %} alt="Лайк!">
