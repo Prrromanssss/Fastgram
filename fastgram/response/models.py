@@ -59,6 +59,11 @@ class Response(NameBaseModel):
     def get_likes(self):
         return self.likes.only('id')
 
+    def get_comments(self):
+        return Comment.objects.filter(
+            response=self
+        ).all()
+
 
 class Delivery(NameBaseModel, IsPublishedBaseModel):
     weight = models.PositiveSmallIntegerField(
@@ -93,7 +98,7 @@ class MainImage(ImageBaseModel):
         verbose_name_plural = 'изображения'
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     text = RichTextField(
         'текст',
         help_text='Напишите свой комментарий'
@@ -108,3 +113,10 @@ class Comments(models.Model):
         verbose_name='отзыв',
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'комментарии'
+
+    def __str__(self):
+        return f'{self.user} к \'{self.response}\''

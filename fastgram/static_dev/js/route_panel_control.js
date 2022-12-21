@@ -15,15 +15,17 @@ ymaps.ready(function () {
     });
 
     control.routePanel.options.set({
+        allowSwitch: false,
+        reverseGeocoding: true,
         types: { taxi: true }
     });
 
-    // var switchPointsButton = new ymaps.control.Button({
-    //     data: {content: "Поменять местами", title: "Поменять точки местами"},
-    //     options: {selectOnClick: false, maxWidth: 160}
-    // });
-    // switchPointsButton.events.add('click', function () {
-    //     control.routePanel.switchPoints();
-    // });
-    // myMap.controls.add(switchPointsButton);
+    var switchPointsButton = new ymaps.control.Button({
+        data: {content: "Поменять местами", title: "Поменять точки местами"},
+        options: {selectOnClick: false, maxWidth: 160}
+    });
+    switchPointsButton.events.add('click', function () {
+        control.routePanel.switchPoints();
+    });
+    myMap.controls.add(switchPointsButton);
 });
