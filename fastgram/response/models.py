@@ -56,9 +56,6 @@ class Response(NameBaseModel):
     def get_absolute_url(self):
         return reverse('response:response_detail', kwargs={'pk': self.pk})
 
-    def get_likes(self):
-        return self.likes.only('id')
-
     def get_comments(self):
         return Comment.objects.filter(
             response=self

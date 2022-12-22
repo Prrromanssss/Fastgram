@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView
 from response.forms import MainImageForm, ResponseForm
@@ -59,8 +59,7 @@ class LikeResponseView(FormView):
         return Response.objects.list_responses()
 
     def post(self, request, response_id, page_number, is_detail):
-        is_detail = True if is_detail == 'True' else False
-
+        is_detail = is_detail == 'True'
         if is_detail:
             success_url = reverse_lazy(
                 'response:response_detail',
@@ -71,15 +70,17 @@ class LikeResponseView(FormView):
                 reverse_lazy('response:list_responses')
                 + f'?page={page_number}'
                 )
-        response = self.get_queryset().filter(
-            id=response_id,
-        )
-        like = response.filter(likes=request.user).first()
-        if like:
-            like.likes.remove(request.user)
+
+        response = get_object_or_404(
+            self.get_queryset(),
+            id=response_id
+            )
+
+        if request.user in response.likes.all():
+            response.likes.remove(request.user)
         else:
-            response.first().likes.add(request.user)
-            response.first().save()
+            response.likes.add(request.user)
+            response.save()
         return redirect(success_url)
 
 
