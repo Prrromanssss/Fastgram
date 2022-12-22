@@ -27,8 +27,8 @@ class ListResponsesView(ListView, FormView):
                     Q(name__contains=searched)
                     | Q(delivery__name__contains=searched)
                     | Q(text__contains=searched)
-                    )
                 )
+            )
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -48,9 +48,9 @@ class ListResponsesView(ListView, FormView):
         )
         if self.request.user and image_form.is_valid():
             response = self.model.objects.create(
-                        user=self.request.user,
-                        **form.cleaned_data,
-                    )
+                user=self.request.user,
+                **form.cleaned_data,
+            )
             self.model_image.objects.create(
                 response=response,
                 **image_form.cleaned_data,
@@ -68,7 +68,7 @@ class LikeResponseView(FormView):
             success_url = reverse_lazy(
                 'response:response_detail',
                 kwargs={'pk': response_id}
-                )
+            )
         elif page_number:
             success_url = (
                 reverse_lazy('response:list_responses')

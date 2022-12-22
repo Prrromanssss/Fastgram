@@ -112,4 +112,4 @@ class Comment(models.Model):
         verbose_name_plural = 'комментарии'
 
     def __str__(self):
-        return f'{self.user} к \'{self.response}\''
+        return f'{self.user} к "{self.response}"'
