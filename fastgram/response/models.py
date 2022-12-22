@@ -63,12 +63,6 @@ class Response(NameBaseModel):
 
 
 class Delivery(NameBaseModel):
-    weight = models.PositiveSmallIntegerField(
-        'вес',
-        default=100,
-        help_text='Максимум 32767',
-    )
-
     another_link = models.URLField(
         'другие отзывы',
         max_length=200,

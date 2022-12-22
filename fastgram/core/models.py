@@ -35,7 +35,7 @@ class ImageBaseModel(models.Model):
     def image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_img.url}" '
+                f'<img src="{self.get_img.url}"'
             )
         return 'Нет изображения'
 
@@ -49,7 +49,7 @@ class ImageBaseModel(models.Model):
     def small_image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_small_img.url}" '
+                f'<img src="{self.get_small_img.url}"'
             )
         return 'Нет изображения'
 
@@ -84,7 +84,7 @@ class ImageUserBaseModel(models.Model):
     def image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_img.url}" '
+                f'<img src="{self.get_img.url}"'
             )
         return 'Нет аватарки'
 
@@ -98,7 +98,7 @@ class ImageUserBaseModel(models.Model):
     def small_image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_small_img.url}" '
+                f'<img src="{self.get_small_img.url}"'
             )
         return 'Нет аватарки'
 
