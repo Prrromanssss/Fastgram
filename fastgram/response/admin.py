@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from response.models import Comment, Delivery, MainImage, Response
 
 
@@ -10,9 +9,8 @@ class MainImageInline(admin.TabularInline):
 
 @admin.register(Delivery)
 class DeliveryAdmin(admin.ModelAdmin):
-    fields = ('name', 'is_published', 'weight', 'another_link')
-    list_display = ('name', 'is_published')
-    list_editable = ('is_published',)
+    fields = ('name', 'weight', 'another_link')
+    list_display = ('name',)
 
 
 @admin.register(Response)
@@ -45,7 +43,4 @@ class MainImageAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'response',
-    )
+    list_display = ('user', 'response')

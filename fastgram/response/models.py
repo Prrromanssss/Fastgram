@@ -1,9 +1,8 @@
 from ckeditor.fields import RichTextField
+from core.models import ImageBaseModel, NameBaseModel
 from django.db import models
 from django.urls import reverse
-
-from core.models import ImageBaseModel, IsPublishedBaseModel, NameBaseModel
-from response.managers import ResponseManager
+from response.managers import CommentManager, ResponseManager
 from users.models import CustomUser
 
 
@@ -57,22 +56,13 @@ class Response(NameBaseModel):
     def get_absolute_url(self):
         return reverse('response:response_detail', kwargs={'pk': self.pk})
 
-    def get_likes(self):
-        return self.likes.only('id')
-
     def get_comments(self):
         return Comment.objects.filter(
             response=self
         ).all()
 
 
-class Delivery(NameBaseModel, IsPublishedBaseModel):
-    weight = models.PositiveSmallIntegerField(
-        'вес',
-        default=100,
-        help_text='Максимум 32767',
-    )
-
+class Delivery(NameBaseModel):
     another_link = models.URLField(
         'другие отзывы',
         max_length=200,
@@ -115,9 +105,11 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
     )
 
+    objects = CommentManager()
+
     class Meta:
         verbose_name = 'комментарий'
         verbose_name_plural = 'комментарии'
 
     def __str__(self):
-        return f'{self.user} к \"{self.response}\"'
+        return f'{self.user} к "{self.response}"'
