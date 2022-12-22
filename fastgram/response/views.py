@@ -108,7 +108,7 @@ class ResponseDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = self.comment_form_class
-        context['comment'] = self.model_comment.objects.all()
+        context['comments'] = self.model_comment.objects.all_comments()
         return context
 
 

@@ -103,7 +103,6 @@ class Comment(models.Model):
         Response,
         verbose_name='отзыв',
         on_delete=models.CASCADE,
-        # related_name='response_comments',
     )
 
     objects = CommentManager()

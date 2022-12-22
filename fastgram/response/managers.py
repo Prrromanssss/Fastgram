@@ -39,6 +39,7 @@ class CommentManager(models.Manager):
                 'user',
                 'text',
                 'response__user',
+                'response__id',
                 'user__email',
                 )
         )

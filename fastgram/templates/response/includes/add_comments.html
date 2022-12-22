@@ -28,10 +28,12 @@
           <div class="modal-body text-dark">
             <div>
               {% for comment in comments %}
-                <div class="border border-2 rounded border-dark p-3 mb-3">
-                  <h6 class="border-bottom pb-2">{{ comment.user }}</h3>
-                  <p>{{ comment.text }}</p>
-                </div>
+                {% if response.id == comment.response.id %}
+                  <div class="border border-2 rounded border-dark p-3 mb-3">
+                    <h6 class="border-bottom pb-2">{{ comment.user }}</h3>
+                    <p>{{ comment.text }}</p>
+                  </div>
+                {% endif %}
               {% endfor %}
             </div>
             {% if page_obj %}
