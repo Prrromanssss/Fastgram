@@ -10,8 +10,6 @@ response_delivery
 -
 ID integer pk
 name varchar(150)
-weight smallint
-is_published bool
 another_link varchar(200)
 
 response_mainimage

@@ -11,7 +11,14 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = CustomUser
     readonly_fields = ('password',)
-    list_display = ('email', 'is_staff', 'is_active',)
+    list_display = (
+        'email',
+        'first_name',
+        'last_name',
+        'is_staff',
+        'is_active',
+    )
+    list_display_links = ('email', 'first_name', 'last_name')
     list_filter = ('email', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password', 'first_name',

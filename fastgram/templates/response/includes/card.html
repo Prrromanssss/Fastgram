@@ -1,4 +1,5 @@
 {% load static %}
+
 {% load thumbnail %}
 
 <div class="container mt-3 text-dark">
@@ -68,20 +69,23 @@
           method="post"
           class="d-inline-block">
         {% endif %}
-
-            {% csrf_token %}
+          {% csrf_token %}
             <button type="submit" class="border-0 button">
-              {% if user in response.get_likes %}
+              {% if user in response.response_likes  %}
                 <img class="image" src={% static 'img/like_red.png' %} alt="Лайк!">
               {% else %}
                 <img class="image" src={% static 'img/like.png' %} alt="Лайк!">
               {% endif %}
             </button>
         </form>
-        <div class="text-black d-inline-block">{{ response.likes.count }}</div>
+        <div class="text-black d-inline-block">{{ response.response_likes|length }}</div>
       </div>
+
+      {% include 'response/includes/add_comments.html' %}
+
       <div class="card-footer text-dark">
         {{ response.created_on }}
       </div>
     </div>
+  </div>
 </div>

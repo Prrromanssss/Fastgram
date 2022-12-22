@@ -73,12 +73,12 @@ class LikeResponseView(FormView):
             success_url = (
                 reverse_lazy('response:list_responses')
                 + f'?page={page_number}'
-            )
+                )
 
         response = get_object_or_404(
             self.get_queryset(),
             id=response_id,
-        )
+            )
 
         if request.user in response.likes.all():
             response.likes.remove(request.user)
@@ -121,12 +121,12 @@ class CommentResponse(FormView):
             success_url = reverse_lazy(
                 'response:response_detail',
                 kwargs={'pk': response_id}
-            )
+                )
         elif page_number:
             success_url = (
                 reverse_lazy('response:list_responses')
                 + f'?page={page_number}'
-            )
+                )
         form = CommentForm(request.POST or None)
         if form.is_valid():
             self.model.objects.create(

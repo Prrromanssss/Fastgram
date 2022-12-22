@@ -4,16 +4,6 @@ from django_cleanup.signals import cleanup_pre_delete
 from sorl.thumbnail import delete, get_thumbnail
 
 
-class IsPublishedBaseModel(models.Model):
-    is_published = models.BooleanField(
-        'опубликовано',
-        default=True,
-    )
-
-    class Meta:
-        abstract = True
-
-
 class NameBaseModel(models.Model):
     name = models.CharField(
         'название',
@@ -45,7 +35,7 @@ class ImageBaseModel(models.Model):
     def image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_img.url}" '
+                f'<img src="{self.get_img.url}"'
             )
         return 'Нет изображения'
 
@@ -59,7 +49,7 @@ class ImageBaseModel(models.Model):
     def small_image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_small_img.url}" '
+                f'<img src="{self.get_small_img.url}"'
             )
         return 'Нет изображения'
 
@@ -94,7 +84,7 @@ class ImageUserBaseModel(models.Model):
     def image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_img.url}" '
+                f'<img src="{self.get_img.url}"'
             )
         return 'Нет аватарки'
 
@@ -108,7 +98,7 @@ class ImageUserBaseModel(models.Model):
     def small_image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_small_img.url}" '
+                f'<img src="{self.get_small_img.url}"'
             )
         return 'Нет аватарки'
 
