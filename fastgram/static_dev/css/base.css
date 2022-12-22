@@ -4,11 +4,24 @@ html {
     padding-bottom: 75px;
    }
 
-.my-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+footer {
+    flex-shrink: 0;
 }
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    /* font-size: 16px; */
+    font-weight: 400;
+    /* color: #000;
+    background-color: #fff; */
+    min-width: 350px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 .li_active:hover {
     text-decoration: underline;

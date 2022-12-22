@@ -155,8 +155,8 @@ class CalculationDelivery:
             post_delivery_day = 'меньше дня'
         else:
             post_delivery_day = coutier_delivery_day - 1
-        if int(coutier_delivery_day) == float(coutier_delivery_day):
-            coutier_delivery_day = int(coutier_delivery_day)
+        if int(coutier_delivery_cost) == float(coutier_delivery_cost):
+            coutier_delivery_cost = int(coutier_delivery_cost)
         delivery_boxberry = [
             f'До почтового отделения: за {coutier_delivery_day}'
             f'(количество дней) за {coutier_delivery_cost} рублей',
