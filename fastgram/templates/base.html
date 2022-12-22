@@ -46,15 +46,12 @@
   </head>
 
   <body class="p-0 m-0" style="background: #444444; color: #d9d9d9; width: 100%; height: 100%">
-    <div class="wrapper">
-      {% include "includes/header.html" %}
-      <main role="main" class="flex-shrink-0">
-        {% block content %}
-        Контент не подвезли
-        {% endblock content %}
-      </main>
-      
-    </div>
+    {% include "includes/header.html" %}
+
+    {% block content %}
+      Контент не подвезли
+    {% endblock content %}
+
     {% include "includes/footer.html" %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   </body>
