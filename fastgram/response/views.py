@@ -12,7 +12,6 @@ class ListResponsesView(ListView, FormView):
     form_class = ResponseForm
     form_image_class = MainImageForm
     template_name = 'response/list_responses.html'
-    get_queryset = Response.objects.list_responses
     paginate_by = 5
     success_url = reverse_lazy('response:list_responses')
 
@@ -56,7 +55,8 @@ class ListResponsesView(ListView, FormView):
 
 
 class LikeResponseView(FormView):
-    model = Response
+    def get_queryset(self):
+        return Response.objects.list_responses()
 
     def post(self, request, response_id, page_number, is_detail):
         is_detail = True if is_detail == 'True' else False
@@ -71,7 +71,7 @@ class LikeResponseView(FormView):
                 reverse_lazy('response:list_responses')
                 + f'?page={page_number}'
                 )
-        response = self.model.objects.filter(
+        response = self.get_queryset().filter(
             id=response_id,
         )
         like = response.filter(likes=request.user).first()
@@ -94,3 +94,6 @@ class ResponseDetailView(DetailView):
                 kwargs={'pk': kwargs['pk']}
             )
         return reverse_lazy('response:response_detail')
+
+    def get_queryset(self):
+        return Response.objects.list_responses()

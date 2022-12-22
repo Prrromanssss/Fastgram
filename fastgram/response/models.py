@@ -1,5 +1,5 @@
 from ckeditor.fields import RichTextField
-from core.models import ImageBaseModel, IsPublishedBaseModel, NameBaseModel
+from core.models import ImageBaseModel, NameBaseModel
 from django.db import models
 from django.urls import reverse
 from response.managers import ResponseManager
@@ -65,7 +65,7 @@ class Response(NameBaseModel):
         ).all()
 
 
-class Delivery(NameBaseModel, IsPublishedBaseModel):
+class Delivery(NameBaseModel):
     weight = models.PositiveSmallIntegerField(
         'вес',
         default=100,

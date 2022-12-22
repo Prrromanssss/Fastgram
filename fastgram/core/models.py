@@ -4,16 +4,6 @@ from django_cleanup.signals import cleanup_pre_delete
 from sorl.thumbnail import delete, get_thumbnail
 
 
-class IsPublishedBaseModel(models.Model):
-    is_published = models.BooleanField(
-        'опубликовано',
-        default=True,
-    )
-
-    class Meta:
-        abstract = True
-
-
 class NameBaseModel(models.Model):
     name = models.CharField(
         'название',
