@@ -129,8 +129,8 @@ class CalculationDelivery:
         with open('delivery/AdditionalsDeliveryServices/sities_code.json', 'r',
                   encoding='utf8') as read_file:
             cities_name_to_code = json.load(read_file)
-        city_from = cities_name_to_code[self.city_from]
-        city_to = cities_name_to_code[self.city_to]
+        city_from = cities_name_to_code[self.city_from.lower()]
+        city_to = cities_name_to_code[self.city_to.lower()]
         params = {
             'method': 'TarificationLaP',
             'sender_city': city_from,
