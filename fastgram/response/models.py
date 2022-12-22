@@ -56,9 +56,6 @@ class Response(NameBaseModel):
     def get_absolute_url(self):
         return reverse('response:response_detail', kwargs={'pk': self.pk})
 
-    def get_likes(self):
-        return self.likes.only('id')
-
     def get_comments(self):
         return Comment.objects.filter(
             response=self
@@ -66,12 +63,6 @@ class Response(NameBaseModel):
 
 
 class Delivery(NameBaseModel):
-    weight = models.PositiveSmallIntegerField(
-        'вес',
-        default=100,
-        help_text='Максимум 32767',
-    )
-
     another_link = models.URLField(
         'другие отзывы',
         max_length=200,

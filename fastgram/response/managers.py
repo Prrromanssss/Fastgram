@@ -10,7 +10,8 @@ class ResponseManager(models.Manager):
             .select_related('delivery', 'mainimage', 'user')
             .prefetch_related(
                 Prefetch(
-                    'user', queryset=CustomUser.objects.user_briefly()
+                    'likes', queryset=CustomUser.objects.all(),
+                    to_attr='response_likes',
                 )
             )
             .only(

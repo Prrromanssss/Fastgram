@@ -43,7 +43,4 @@ class MainImageAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'response',
-    )
+    list_display = ('user', 'response')

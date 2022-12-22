@@ -25,9 +25,3 @@ class CustomUserManager(BaseUserManager):
                 'Суперпользователь должен иметь is_superuser=True.'
             )
         return self.create_user(email, password, **extra_fields)
-
-    def user_briefly(self):
-        return (
-            self.get_queryset()
-            .only('email', 'image')
-        )

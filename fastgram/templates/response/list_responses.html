@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
   <title>Лента отзывов</title>
 {% endblock title %}
@@ -12,7 +14,18 @@
 <hr>
 {% for response in page_obj %}
     {% include 'response/includes/card.html' %}
+    {% empty %}
+      <div class="col-md-8 mx-auto text-center mt-3">
+        <p class="lead mb-4">Отзывов пока нет... Будьте первым, кто их оставит! </p>
+        <img
+            src="{% static 'img/no_responses.jpeg' %}"
+            height="200"
+            alt="Sad toby :("
+            class="d-block mx-auto mb-3 rounded-pill"
+            >
+        </div>
 {% endfor %}
+
 {% if page_obj %}
   {% include 'response/includes/pagination.html' %}
 {% endif %}
