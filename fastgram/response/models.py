@@ -2,7 +2,7 @@ from ckeditor.fields import RichTextField
 from core.models import ImageBaseModel, NameBaseModel
 from django.db import models
 from django.urls import reverse
-from response.managers import ResponseManager
+from response.managers import CommentManager, ResponseManager
 from users.models import CustomUser
 
 
@@ -103,7 +103,10 @@ class Comment(models.Model):
         Response,
         verbose_name='отзыв',
         on_delete=models.CASCADE,
+        # related_name='response_comments',
     )
+
+    objects = CommentManager()
 
     class Meta:
         verbose_name = 'комментарий'

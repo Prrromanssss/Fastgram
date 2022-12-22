@@ -2,8 +2,8 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView
-from response.forms import MainImageForm, ResponseForm, CommentForm
-from response.models import MainImage, Response, Comment
+from response.forms import CommentForm, MainImageForm, ResponseForm
+from response.models import Comment, MainImage, Response
 
 
 class ListResponsesView(ListView, FormView):
@@ -34,7 +34,7 @@ class ListResponsesView(ListView, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = self.comment_form_class
-        context['comment'] = self.model_comment.objects.all()
+        context['comments'] = self.model_comment.objects.all_comments()
         context['image_form'] = self.form_image_class(
             self.request.POST or None,
             self.request.FILES,
@@ -77,7 +77,7 @@ class LikeResponseView(FormView):
 
         response = get_object_or_404(
             self.get_queryset(),
-            id=response_id
+            id=response_id,
             )
 
         if request.user in response.likes.all():
@@ -89,6 +89,8 @@ class LikeResponseView(FormView):
 
 
 class ResponseDetailView(DetailView):
+    model_comment = Comment
+    comment_form_class = CommentForm
     model = Response
     template_name = 'response/response_detail.html'
 
@@ -103,17 +105,33 @@ class ResponseDetailView(DetailView):
     def get_queryset(self):
         return Response.objects.list_responses()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = self.comment_form_class
+        context['comment'] = self.model_comment.objects.all()
+        return context
+
 
 class CommentResponse(FormView):
     model = Comment
-    success_url = reverse_lazy('response:list_responses')
 
-    def post(self, request, response_id):
-        form = CommentForm(request.POST)
+    def post(self, request, response_id, page_number, is_detail):
+        is_detail = is_detail == 'True'
+        if is_detail:
+            success_url = reverse_lazy(
+                'response:response_detail',
+                kwargs={'pk': response_id}
+                )
+        elif page_number:
+            success_url = (
+                reverse_lazy('response:list_responses')
+                + f'?page={page_number}'
+                )
+        form = CommentForm(request.POST or None)
         if form.is_valid():
             self.model.objects.create(
                 user=request.user,
                 response=Response.objects.get(id=response_id),
                 **form.cleaned_data,
             )
-        return redirect(self.get_success_url())
+        return redirect(success_url)

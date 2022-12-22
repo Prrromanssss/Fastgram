@@ -1,0 +1,66 @@
+<div class="d-inline-block p-1 mx-2">
+  <button
+    type="button"
+    class="btn btn-dark text-nowrap"
+    data-bs-toggle="modal"
+    data-bs-target="#modal-comment{{ response.id }}">
+    Комментарии
+    </button>
+    <div
+    class="modal fade"
+    id="modal-comment{{ response.id }}"
+    tabindex="-1"
+    aria-labelledby="commentModalLabel"
+    aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="commentModalLabel">
+              Комментарии
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body text-dark">
+            <div>
+              {% for comment in comments %}
+                <div class="border border-2 rounded border-dark p-3 mb-3">
+                  <h6 class="border-bottom pb-2">{{ comment.user }}</h3>
+                  <p>{{ comment.text }}</p>
+                </div>
+              {% endfor %}
+            </div>
+            {% if page_obj %}
+              <form
+                action={% if 'response_detail' in request.path %} 
+                       {% url 'response:comment' response_id=response.id page_number=page_obj.number is_detail=True %}
+                       {% else %}
+                       {% url 'response:comment' response_id=response.id page_number=page_obj.number is_detail=False %}
+                       {% endif %}
+                method="post"
+                class="d-inline-block">
+            {% else %}
+              <form
+              action={% if 'response_detail' in request.path %} 
+                     {% url 'response:comment' response_id=response.id page_number=0 is_detail=True %}
+                     {% else %}
+                     {% url 'response:comment' response_id=response.id page_number=0 is_detail=False %}
+                     {% endif %}
+              method="post"
+              class="d-inline-block">
+            {% endif %}
+              {% csrf_token %}
+              {{ comment_form.as_p }}
+              <button type="submit" name="comment" class="btn btn-dark mx-sm-3 w-25 ">
+                Опубликовать
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
