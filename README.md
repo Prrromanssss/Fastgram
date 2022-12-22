@@ -55,14 +55,14 @@ python fastgram/manage.py migrate
 
 6.1.1 To load data for database from the fixtures run this command
 ```commandline
-python lyceum/manage.py loaddata data.json
+python fastgram/manage.py loaddata data.json
 ```
 
 ### 7. Authorizing admin user
 
 7.1.1 If you have loaded data from the fixtures, run this command to authorize admin user
 ```commandline
-python lyceum/manage.py createsuperuser
+python fastgram/manage.py createsuperuser
 ```
 
 ### 8. Running project
