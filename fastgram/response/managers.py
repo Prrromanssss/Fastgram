@@ -10,9 +10,11 @@ class ResponseManager(models.Manager):
             .select_related('delivery', 'mainimage', 'user')
             .prefetch_related(
                 Prefetch(
-                    'likes', queryset=CustomUser.objects.all(),
+                    'likes',
+                    queryset=CustomUser.objects.all(),
                     to_attr='response_likes',
-                )
+                ),
+
             )
             .only(
                 'name',
@@ -25,4 +27,19 @@ class ResponseManager(models.Manager):
                 'user__email',
                 'user__image',
             )
+        )
+
+
+class CommentManager(models.Manager):
+    def all_comments(self):
+        return (
+            self.get_queryset()
+            .select_related('response', 'user')
+            .only(
+                'user',
+                'text',
+                'response__user',
+                'response__id',
+                'user__email',
+                )
         )
