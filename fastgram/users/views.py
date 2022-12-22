@@ -35,9 +35,10 @@ class ProfileView(LoginRequiredMixin, FormView):
         )
         if form.is_valid():
             old_image = CustomUser.objects.get(id=request.user.id).image
-            image_path = old_image.path
-            if os.path.exists(image_path):
-                os.remove(image_path)
+            if old_image:
+                image_path = old_image.path
+                if os.path.exists(image_path):
+                    os.remove(image_path)
             form.save()
         return super().post(self, request)
 
