@@ -71,7 +71,7 @@ class ImageUserBaseModel(models.Model):
     image = models.ImageField(
         'аватарка',
         upload_to='previews/%Y/%m/%d',
-        default='blank-avatar.jpeg',
+        default='images/blank-avatar.jpeg',
     )
 
     class Meta:
