@@ -1,9 +1,10 @@
-from delivery.calculation_of_delivery import CalculationDelivery
-from delivery.forms import DeliveryForm
-from delivery.models import Delivery
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
+
+from delivery.calculation_of_delivery import CalculationDelivery
+from delivery.forms import DeliveryForm
+from delivery.models import Delivery
 
 
 class DeliveryView(FormView):
@@ -21,20 +22,20 @@ class DeliveryView(FormView):
                 calculate_l_post = calculation_delivery.calculate_l_post()
             except Exception:
                 calculate_l_post = []
-            calculate_cse = []
+            try:
+                calculate_boxberry = calculation_delivery.calculate_boxberry()
+            except Exception:
+                calculate_boxberry = []
             return render(request, 'delivery/show_deliveries.html',
                           {'args_l_post': calculate_l_post,
-                           'args_cse': calculate_cse})
-            # return redirect(self.get_success_url())
+                           'args_boxberry': calculate_boxberry})
 
         if form.is_valid():
             return redirect(self.get_success_url())
         else:
             return render(request, 'delivery/show_deliveries.html',
                           {'args_l_post': [],
-                           'args_cse': []})
-
-        # return render(request, self.template_name)
+                           'args_boxberry': []})
 
 
 class DeliveryShowView(TemplateView):

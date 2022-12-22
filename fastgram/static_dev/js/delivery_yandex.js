@@ -4,11 +4,16 @@ function init() {
     var DELIVERY_TARIFF = 20,
         MINIMUM_COST = 500,
         myMap = new ymaps.Map('map', {
-            center: [55.755246, 37.617779],
+            center: [60.906882, 30.067233],
             zoom: 9,
             controls: []
         }),
-        routePanelControl = new ymaps.control.RoutePanel({}),
+        routePanelControl = new ymaps.control.RoutePanel({
+            options: {
+                showHeader: true,
+                title: 'Расчёт доставки'
+            }
+        }),
         zoomControl = new ymaps.control.ZoomControl({
             options: {
                 size: 'small',

@@ -1,7 +1,8 @@
 from ckeditor.fields import RichTextField
-from core.models import ImageBaseModel, IsPublishedBaseModel, NameBaseModel
 from django.db import models
 from django.urls import reverse
+
+from core.models import ImageBaseModel, IsPublishedBaseModel, NameBaseModel
 from response.managers import ResponseManager
 from users.models import CustomUser
 
@@ -119,4 +120,4 @@ class Comment(models.Model):
         verbose_name_plural = 'комментарии'
 
     def __str__(self):
-        return f'{self.user} к \'{self.response}\''
+        return f'{self.user} к \"{self.response}\"'

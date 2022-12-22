@@ -1,7 +1,8 @@
 import json
 
 import requests
-from delivery.DeliveryServices import additions_lpost, additions_pony_express
+from delivery.AdditionalsDeliveryServices import (additionals_boxberry,
+                                                  additions_lpost)
 
 
 class CalculationDelivery:
@@ -18,16 +19,15 @@ class CalculationDelivery:
         self.length = form_params['length']
         self.width = form_params['width']
         self.height = form_params['height']
+        self.cost = form_params['cost']
         self.city_from = form_params['city_from'].capitalize()
         self.subject_from = form_params['subject_from'].capitalize()
         self.subject_type_from = value_to_subject_dict[
             form_params['subject_type_from']].capitalize()
-        # self.district_from = form_params['district_from'].capitalize()
         self.city_to = form_params['city_to'].capitalize()
         self.subject_to = form_params['subject_to'].capitalize()
         self.subject_type_to = value_to_subject_dict[
             form_params['subject_type_to']].capitalize()
-        # self.district_to = form_params['district_to'].capitalize()
         self.volume = self.width * self.height * self.length
         self.ditance = 10
 
@@ -118,63 +118,49 @@ class CalculationDelivery:
             day_logistic_courier = 'срок меньше дня'
         else:
             day_logistic_courier = day_logistic - 1
-        delivery_lpost = [f'Доставка до почтового склада за {day_logistic} '
-                          f'(кол-во дней) за {courier_cost}р',
-                          f'Доставка курьером до двери за '
-                          f'{day_logistic_courier}'
-                          f'(кол-во дней) за {to_post_cost}р']
+        delivery_lpost = [f'До почтового отделения: за {day_logistic}'
+                          f'(количество дней) за {courier_cost} рублей',
+                          f'До двери: от {day_logistic_courier}'
+                          f'(количество дней) за {to_post_cost} рублей'
+                          ]
         return delivery_lpost
 
-    def calculate_pony_express(self):
-        data = {
-            'parcel[currency_id]': '4',
-            'parcel[tips_iblock_code]': 'form_tips',
-            'parcel[tips_section_code]': 'pegas',
-            'parcel[direction]': 'inner',
-            'parcel[from_country]': 'Россия',
-            'parcel[from_city]': 'Екатеринбург',
-            'parcel[to_country]': 'Россия',
-            'parcel[to_city]': 'Москва',
-            'parcel[weight]': self.weight,
-            'b_volume_l': '',
-            'b_volume_h': '',
-            'b_volume_w': '',
-            'c_volume_l': '',
-            'c_volume_d': '',
-            't_volume_h': '',
-            't_volume_b': '',
-            't_volume_a': '',
-            't_volume_c': '',
-            'parcel[usecurrentdt]': '0',
-            'parcel[kgo]': '0',
-            'parcel[og]': '0',
-            'parcel[isdoc]': '0',
+    def calculate_boxberry(self):
+        with open('delivery/AdditionalsDeliveryServices/sities_code.json', 'r',
+                  encoding='utf8') as read_file:
+            cities_name_to_code = json.load(read_file)
+        city_from = cities_name_to_code[self.city_from]
+        city_to = cities_name_to_code[self.city_to]
+        params = {
+            'method': 'TarificationLaP',
+            'sender_city': city_from,
+            'receiver_city': city_to,
+            'public_price': self.cost * 100,
+            'package[boxberry_package]': 0,
+            'package[width]': self.width,
+            'package[height]': self.height,
+            'package[depth]': self.length,
         }
-
-        response = requests.post(
-            'https://www.ponyexpress.ru/local/ajax/tariff.php',
-            cookies=additions_pony_express.cookies,
-            headers=additions_pony_express.headers,
-            data=data)
-        resp_text = response.text
-
-        print(resp_text)
-
-        # delivery_pony_express = []
-        # dict_of_response = json.loads(resp_text)
-        # count_tariff = 0
-        # text_tariff = 'tariffall'
-        # for _ in range(len(dict_of_response['result'])):
-        #     if count_tariff == 0:
-        #         dict_for_tariff = dict_of_response['result'][text_tariff]
-        #     else:
-        #         dict_for_tariff = dict_of_response['result'][
-        #             f'{count_tariff}:{text_tariff}']
-
-        #     delivery_pony_express.append(f'{dict_for_tariff["servise"]} '
-        #                                  f'стоимостью '
-        #                                  f'{dict_for_tariff["tariff"]} за '
-        #                                  f'{dict_for_tariff["delivery"]}
-        # дней')
-        #     count_tariff += 1
-        # print(delivery_pony_express)
+        resp_text = requests.get(
+            'https://boxberry.ru/proxy/delivery/cost/pip?',
+            params=params,
+            cookies=additionals_boxberry.cookies,
+            headers=additionals_boxberry.headers,
+        )
+        dict_of_response = json.loads(resp_text.text)
+        coutier_delivery_cost = dict_of_response['data'][0][
+            'default_services_cost'] / 100
+        coutier_delivery_day = int(dict_of_response['data'][0]['time'])
+        if coutier_delivery_day - 1 == 0:
+            post_delivery_day = 'меньше дня'
+        else:
+            post_delivery_day = coutier_delivery_day - 1
+        if int(coutier_delivery_day) == float(coutier_delivery_day):
+            coutier_delivery_day = int(coutier_delivery_day)
+        delivery_boxberry = [
+            f'До почтового отделения: за {coutier_delivery_day}'
+            f'(количество дней) за {coutier_delivery_cost} рублей',
+            f'До двери: от {post_delivery_day}'
+            f'(количество дней) за {coutier_delivery_cost + 200} рублей'
+        ]
+        return delivery_boxberry

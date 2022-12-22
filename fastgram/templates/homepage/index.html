@@ -6,15 +6,21 @@
   <title>О нас</title>
 {% endblock title %}
 
-{% block add_css_link %}
-    <link rel="stylesheet" href={% static 'css/delivery.css' %}>
-{% endblock add_css_link %}
-
 {% block content %}
-  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=40d1649f-0493-4b70-98ba-98533de7710b" type="text/javascript"></script>
-  <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
-  <script src={% static 'js/delivery_yandex.js' %} type="text/javascript"></script>
-  <div id="map"></div>
+<div class="container-xxl bd-gutter">
+    <div class="col-md-8 mx-auto text-center mt-3">
+      <img
+        src="{% static 'img/toby.png' %}"
+        height="200"
+        alt="Avatar of our store"
+        class="d-block mx-auto mb-3">
+      <h1 class="mb-3 fw-semibold">Выбери самый оптимальный сервис!</h1>
+      <p class="lead mb-4">
+        Чем больше сила, тем больше ответственность.
+      </p>
+      <p>- Дядя Бэн</p>
+    </div>
+  </div>
 {% endblock content %}
 
 
