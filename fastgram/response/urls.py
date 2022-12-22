@@ -20,4 +20,9 @@ urlpatterns = [
         views.LikeResponseView.as_view(),
         name='like'
         ),
+    path(
+        'comment/<int:response_id>/',
+        views.CommentResponse.as_view(),
+        name='comment'
+        ),
 ]

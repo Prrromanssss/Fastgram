@@ -2,15 +2,17 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView
-from response.forms import MainImageForm, ResponseForm
-from response.models import MainImage, Response
+from response.forms import MainImageForm, ResponseForm, CommentForm
+from response.models import MainImage, Response, Comment
 
 
 class ListResponsesView(ListView, FormView):
     model = Response
     model_image = MainImage
+    model_comment = Comment
     form_class = ResponseForm
     form_image_class = MainImageForm
+    comment_form_class = CommentForm
     template_name = 'response/list_responses.html'
     paginate_by = 5
     success_url = reverse_lazy('response:list_responses')
@@ -31,6 +33,8 @@ class ListResponsesView(ListView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['comment_form'] = self.comment_form_class
+        context['comment'] = self.model_comment.objects.all()
         context['image_form'] = self.form_image_class(
             self.request.POST or None,
             self.request.FILES,
@@ -98,3 +102,18 @@ class ResponseDetailView(DetailView):
 
     def get_queryset(self):
         return Response.objects.list_responses()
+
+
+class CommentResponse(FormView):
+    model = Comment
+    success_url = reverse_lazy('response:list_responses')
+
+    def post(self, request, response_id):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            self.model.objects.create(
+                user=request.user,
+                response=Response.objects.get(id=response_id),
+                **form.cleaned_data,
+            )
+        return redirect(self.get_success_url())
