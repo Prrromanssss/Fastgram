@@ -12,7 +12,6 @@ class Feedback(models.Model):
     mail = models.EmailField(
         'почта',
         max_length=254,
-        default='1@example.com',
         help_text='Максимум 254 символа',
     )
     text = models.TextField(

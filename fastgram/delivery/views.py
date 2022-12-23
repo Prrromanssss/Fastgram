@@ -1,17 +1,15 @@
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
-
 from delivery.calculation_of_delivery import CalculationDelivery
 from delivery.forms import DeliveryForm
 from delivery.models import Delivery
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import FormView, TemplateView
 
 
 class DeliveryView(FormView):
     template_name = 'delivery/delivery.html'
     model = Delivery
     form_class = DeliveryForm
-    context_object_name = 'form'
     success_url = reverse_lazy('delivery:show')
 
     def post(self, request, *args, **kwargs):
