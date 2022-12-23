@@ -2,7 +2,11 @@
 
 ![flake8 tests](https://github.com/Prrromanssss/Fastgram/actions/workflows/flake8-linter.yml/badge.svg)
 
+![Image of the responses](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/responses.png)
 
+![Image of the analyzed delivery 1](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/delivery-1.png)
+
+![Image of the analyzed delivery 2](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/delivery-2.png)
 
 ## Deployment instructions
 
@@ -53,16 +57,16 @@ python fastgram/manage.py migrate
 
 ### 6. Database setup
 
-6.1 The example of the database you can see in the 'examples/db_example.sqlite3' file
-
-6.2 Copy this database to 'fastgram/db.sqlite3'
+6.1.1 To load data for database from the fixtures run this command
+```commandline
+python fastgram/manage.py loaddata data.json
+```
 
 ### 7. Authorizing admin user
 
-7.1.1 If you have copied example database, you have already authorizing admin user
+7.1.1 If you have loaded data from the fixtures, run this command to authorize admin user
 ```commandline
-Email: hey@yandex.ru
-Password: qazwsxe12
+python fastgram/manage.py createsuperuser
 ```
 
 ### 8. Running project

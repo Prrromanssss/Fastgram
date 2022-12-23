@@ -1,8 +1,8 @@
-html { 
-    position: relative; 
-    min-height: 100%;
+html {
+    position:relative; 
+    min-height:100%;
     padding-bottom: 75px;
-   }
+}
 
 footer {
     flex-shrink: 0;
