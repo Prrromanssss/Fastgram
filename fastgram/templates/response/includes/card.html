@@ -15,7 +15,9 @@
           <img src="{{ im.url }}"
               width="{{ im.width }}"
               height="{{ im.height }}"
-              class="rounded-circle z-depth-0">
+              alt="Фото профиля"
+              class="rounded-circle z-depth-0"
+            >
         {% endthumbnail %}
         {{ response.user.email }}
       </div>
@@ -27,7 +29,8 @@
                   width="{{ im.width }}"
                   height="{{ im.height }}"
                   class="rounded float-end"
-                  alt="Картинка к отзыву">
+                  alt="Картинка к отзыву"
+                >
             {% endthumbnail %}
             {% with request.resolver_match.view_name as view_name %}
               {% if view_name == 'response:response_detail' %}
@@ -47,7 +50,7 @@
             {% endwith %}
           <p><a href="{{ response.delivery.another_link }}">
             Вы можете ознакомиться с другими отзывами об этой службе
-          <a><p>        
+          </a></p>        
       </div> 
       <div class="d-inline-block p-1 mx-2 block">
         {% if page_obj %}
@@ -88,4 +91,3 @@
       </div>
     </div>
   </div>
-</div>

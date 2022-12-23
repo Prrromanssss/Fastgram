@@ -7,16 +7,18 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container d-flex-row mx-sm-4 mb-3 mt-3">
+<div class="container">
+<div class="container d-flex-row mb-3 mt-3">
     <h2 class="container">Размещайте свои отзывы по доставкам здесь</h2>
       {% include 'response/includes/add_response.html' %}
+</div>
 </div>
 <hr>
 {% for response in page_obj %}
     {% include 'response/includes/card.html' %}
     {% empty %}
       <div class="col-md-8 mx-auto text-center mt-3">
-        <p class="lead mb-4">Отзывов пока нет... Будьте первым, кто их оставит! </p>
+        <p class="lead mb-4">Отзывов пока нет... Будьте первым, кто их оставит!</p>
         <img
             src="{% static 'img/no_responses.jpeg' %}"
             height="200"

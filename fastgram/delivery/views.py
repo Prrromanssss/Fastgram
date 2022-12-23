@@ -1,9 +1,10 @@
-from delivery.calculation_of_delivery import CalculationDelivery
-from delivery.forms import DeliveryForm
-from delivery.models import Delivery
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
+
+from delivery.calculation_of_delivery import CalculationDelivery
+from delivery.forms import DeliveryForm
+from delivery.models import Delivery
 
 
 class DeliveryView(FormView):
