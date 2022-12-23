@@ -1,12 +1,13 @@
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView
+from django.views.generic.edit import FormMixin
 from response.forms import CommentForm, MainImageForm, ResponseForm
 from response.models import Comment, MainImage, Response
 
 
-class ListResponsesView(ListView, FormView):
+class ListResponsesView(FormMixin, ListView):
     model = Response
     model_image = MainImage
     model_comment = Comment
@@ -27,8 +28,8 @@ class ListResponsesView(ListView, FormView):
                     Q(name__contains=searched)
                     | Q(delivery__name__contains=searched)
                     | Q(text__contains=searched)
+                    )
                 )
-            )
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -38,15 +39,18 @@ class ListResponsesView(ListView, FormView):
         context['image_form'] = self.form_image_class(
             self.request.POST or None,
             self.request.FILES,
-        )
+            )
         return context
 
-    def form_valid(self, form):
+    def post(self, request):
         image_form = self.form_image_class(
             self.request.POST or None,
             self.request.FILES,
-        )
-        if self.request.user and image_form.is_valid():
+            )
+        form = self.form_class(
+            self.request.POST or None
+            )
+        if self.request.user and image_form.is_valid() and form.is_valid():
             response = self.model.objects.create(
                 user=self.request.user,
                 **form.cleaned_data,
@@ -55,7 +59,9 @@ class ListResponsesView(ListView, FormView):
                 response=response,
                 **image_form.cleaned_data,
             )
-        return super().form_valid(form)
+            return redirect(self.get_success_url())
+
+        return render(request, self.get_success_url(), self.get_context_data())
 
 
 class LikeResponseView(FormView):
