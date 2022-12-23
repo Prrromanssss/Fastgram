@@ -3,13 +3,6 @@ from django.db import models
 
 
 class Delivery(models.Model):
-    class Subjects(models.TextChoices):
-        main_city = '1', 'город федерального значения'
-        republic = '2', 'республика'
-        edge = '3', 'край'
-        area = '4', 'область'
-        AA = '5', 'автономный округ'
-        AO = '6', 'автономная область'
 
     weight = models.FloatField(
         'вес', validators=[MinValueValidator(0.1), MaxValueValidator(30)],
@@ -33,27 +26,7 @@ class Delivery(models.Model):
     city_from = models.CharField(
         'Город отправки посылки', max_length=50,
         help_text='Максимум 50 символов')
-    subject_from = models.CharField(
-        'Субъект РФ отправки посылки', max_length=50,
-        help_text='Введите только название субъекта, максимум 50 символов')
-    subject_type_from = models.CharField(
-        'Тип субъекта',
-        max_length=2,
-        choices=Subjects.choices,
-        default=Subjects.main_city,
-        help_text='Выберите тип субъекта из выпадающего списка'
-    )
 
     city_to = models.CharField(
         'Город получения посылки', max_length=50,
         help_text='Максимум 50 символов')
-    subject_to = models.CharField(
-        'Субъект РФ получения посылки', max_length=50,
-        help_text='Введите только название субъекта, максимум 50 символов')
-    subject_type_to = models.CharField(
-        'Тип субъекта',
-        max_length=2,
-        choices=Subjects.choices,
-        default=Subjects.main_city,
-        help_text='Выберите тип субъекта из выпадающего списка'
-    )

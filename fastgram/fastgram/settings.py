@@ -132,3 +132,5 @@ EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@yandex.ru')
+
+YANDEX_MAPS_API_KEY = os.environ.get('YANDEX_MAPS_API_KEY', 'ym_apikey')
