@@ -13,10 +13,10 @@
 {% block content %}
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey={{ apikey }}" type="text/javascript"></script>
     <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
-    <div class='text-center'>
+    <div class="text-center">
         <h1>Стоимость доставки</h1>
-        <h4 style="color: #26ded2" class='mt-3'>Компании доставок для себя</h4>
-        <table class='table-info table mx-auto' style='max-width: 65%;' border="1">
+        <h4 style="color: #26ded2" class="mt-3">Компании доставок для себя</h4>
+        <table class='table-info table mx-auto' style="max-width: 65%;" border="1">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -34,7 +34,7 @@
                     <td>Универсальные доставки</td>
                     {% if args_boxberry %}
                         {% for args in args_boxberry %}
-                            <td>{{args}}</mark>
+                            <td>{{ args }}</mark>
                         {% endfor %}
                     {% else %}
                         <td>Отсутствует(возможно стоит перепроверить форму)</td>
@@ -48,7 +48,7 @@
                     <td>Интернет-магазины</td>
                     {% if args_l_post %}
                         {% for args in args_l_post %}
-                            <td>{{args}}</mark>
+                            <td>{{ args }}</mark>
                         {% endfor %}
                     {% else %}
                         <td>Отсутствует(возможно стоит перепроверить форму)</td>
@@ -56,10 +56,10 @@
                     {% endif %}
                     <td><a href='https://l-post.ru/'>Сайт</a></td>
                 </tr>
-            </tbody>
-        </table>
+            </tbody> 
+        </table> 
     </div>
-    <div class='text-center'>
+    <div class="text-center">
         <h4 style="color: #26ded2" class='mt-3'>Яндекс доставка</h4>
         <h6>компания специализируется на доставках для бизнеса</h6>
         <h6>доставка производится на грузовых автомобилях, тариф перевозки - 20 рублей за км</h6>
@@ -78,15 +78,5 @@
     </ul>
     <div class="text-center pb-3">
         <a class="btn btn-large btn-dark" href={% url 'delivery:delivery' %}>Заполнить форму снова</a>
-    </div>
-    <br />
-    <br />
-    <br />
-    <footer class="my-footer">
-        <div class="container">
-          <p class="text-center text-muted">
-            © {% now "Y" %} Product by SRS
-          </p>
-        </div>
-    </footer>      
+    </div>    
 {% endblock content %}

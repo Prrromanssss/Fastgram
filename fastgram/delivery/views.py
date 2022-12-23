@@ -45,14 +45,16 @@ class DeliveryView(FormView):
                 calculate_boxberry = []
             return render(request, 'delivery/show_deliveries.html',
                           {'args_l_post': calculate_l_post,
-                           'args_boxberry': calculate_boxberry})
+                           'args_boxberry': calculate_boxberry,
+                           'apikey': settings.YANDEX_MAPS_API_KEY})
 
         if form.is_valid():
             return redirect(self.get_success_url())
         else:
             return render(request, 'delivery/show_deliveries.html',
                           {'args_l_post': [],
-                           'args_boxberry': []})
+                           'args_boxberry': [],
+                           'apikey': settings.YANDEX_MAPS_API_KEY})
 
 
 class DeliveryShowView(TemplateView):

@@ -133,8 +133,11 @@ class CalculateBoxberry(CalculationDelivery):
                          cost, city_from, city_to)
 
     def get_sities_code(self):
-        with open('delivery/AdditionalsDeliveryServices/sities_code.json', 'r',
-                  encoding='utf8') as read_file:
+        with open(
+            'delivery/additionals_delivery_services/sities_code.json',
+            'r',
+            encoding='utf8',
+        ) as read_file:
             cities_name_to_code = json.load(read_file)
         city_from = cities_name_to_code[self.city_from.lower()]
         city_to = cities_name_to_code[self.city_to.lower()]
