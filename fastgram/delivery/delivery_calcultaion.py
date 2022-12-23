@@ -3,8 +3,8 @@ import json
 import requests
 from django.conf import settings
 
-from delivery.AdditionalsDeliveryServices import (additionals_boxberry,
-                                                  additions_lpost)
+from delivery.additionals_delivery_services import (additionals_boxberry,
+                                                    additions_lpost)
 
 
 class CalculationDelivery:
