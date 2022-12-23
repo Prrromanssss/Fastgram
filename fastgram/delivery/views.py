@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
@@ -10,6 +10,7 @@ from delivery.models import Delivery
 
 class DeliveryView(FormView):
     template_name = 'delivery/delivery.html'
+    template_name_for_show_deliveries = 'delivery/show_deliveries.html'
     model = Delivery
     form_class = DeliveryForm
     success_url = reverse_lazy('delivery:show')
@@ -31,30 +32,36 @@ class DeliveryView(FormView):
             city_from = form_params['city_from'].capitalize()
             city_to = form_params['city_to'].capitalize()
             try:
-                l_post_delivery = CalculateLPost(weight, length, width, height,
-                                                 cost, city_from, city_to)
+                l_post_delivery = CalculateLPost(
+                    weight, length, width, height,
+                    cost, city_from, city_to
+                    )
                 calculate_l_post = l_post_delivery.calculate_l_post()
             except KeyError:
                 calculate_l_post = []
             try:
-                boxberry_delivery = CalculateBoxberry(weight, length, width,
-                                                      height, cost, city_from,
-                                                      city_to)
+                boxberry_delivery = CalculateBoxberry(
+                    weight, length, width,
+                    height, cost, city_from,
+                    city_to
+                    )
                 calculate_boxberry = boxberry_delivery.calculate_boxberry()
             except KeyError:
                 calculate_boxberry = []
-            return render(request, 'delivery/show_deliveries.html',
-                          {'args_l_post': calculate_l_post,
-                           'args_boxberry': calculate_boxberry,
-                           'apikey': settings.YANDEX_MAPS_API_KEY})
 
-        if form.is_valid():
-            return redirect(self.get_success_url())
-        else:
-            return render(request, 'delivery/show_deliveries.html',
-                          {'args_l_post': [],
-                           'args_boxberry': [],
-                           'apikey': settings.YANDEX_MAPS_API_KEY})
+            return render(
+                request,
+                self.template_name_for_show_deliveries,
+                {
+                    'args_l_post': calculate_l_post,
+                    'args_boxberry': calculate_boxberry,
+                    }
+                )
+
+        return render(
+            request,
+            self.template_name_for_show_deliveries,
+            )
 
 
 class DeliveryShowView(TemplateView):
