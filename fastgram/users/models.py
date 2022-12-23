@@ -12,17 +12,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin, ImageUserBaseModel):
         max_length=150,
         blank=True,
         null=True,
-    )
+        )
     last_name = models.CharField(
         'фамилия',
         max_length=150,
         blank=True,
         null=True,
-    )
+        )
     email = models.EmailField(
         'почта',
         unique=True,
-    )
+        )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)

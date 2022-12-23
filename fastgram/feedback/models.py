@@ -7,21 +7,21 @@ class Feedback(models.Model):
         max_length=150,
         default='',
         help_text='Максимум 150 символов',
-    )
+        )
 
     mail = models.EmailField(
         'почта',
         max_length=254,
         help_text='Максимум 254 символа',
-    )
+        )
     text = models.TextField(
         'фидбэк',
-    )
+        )
 
     created_on = models.DateTimeField(
         'дата написания',
         auto_now_add=True,
-    )
+        )
 
     class Meta:
         verbose_name = 'фидбэк'
@@ -35,6 +35,6 @@ class Feedback(models.Model):
             self.text
             if len(self.text) < 20
             else f'{self.text[:20]}...'
-        )
+            )
 
     short_text.short_description = 'описание фидбэка'

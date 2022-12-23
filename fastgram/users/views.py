@@ -32,7 +32,7 @@ class ProfileView(LoginRequiredMixin, FormView):
             request.POST or None,
             request.FILES,
             instance=request.user,
-        )
+            )
         if form.is_valid():
             old_image = CustomUser.objects.get(id=request.user.id).image
             if old_image:
@@ -47,5 +47,5 @@ class ProfileView(LoginRequiredMixin, FormView):
         context['form'] = self.form_class(
             initial=self.initial,
             instance=self.request.user,
-        )
+            )
         return context

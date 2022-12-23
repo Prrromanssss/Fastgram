@@ -55,7 +55,7 @@ class Delivery(models.Model):
         choices=Subjects.choices,
         help_text='Выберите тип субъекта из выпадающего списка',
         default=Subjects.main_city,
-    )
+        )
     city_to = models.CharField(
         'город получения посылки',
         max_length=50,
@@ -72,4 +72,4 @@ class Delivery(models.Model):
         choices=Subjects.choices,
         help_text='Выберите тип субъекта из выпадающего списка',
         default=Subjects.main_city,
-    )
+        )
