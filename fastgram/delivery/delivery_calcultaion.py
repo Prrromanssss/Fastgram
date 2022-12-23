@@ -1,39 +1,34 @@
 import json
 
 import requests
+from django.conf import settings
+
 from delivery.AdditionalsDeliveryServices import (additionals_boxberry,
                                                   additions_lpost)
 
 
 class CalculationDelivery:
-    def __init__(self, form_params):
-        value_to_subject_dict = {
-            '1': 'город федерального значения',
-            '2': 'республика',
-            '3': 'край',
-            '4': 'область',
-            '5': 'автономный округ',
-            '6': 'автономная область'
-        }
-        self.weight = form_params['weight']
-        self.length = form_params['length']
-        self.width = form_params['width']
-        self.height = form_params['height']
-        self.cost = form_params['cost']
-        self.city_from = form_params['city_from'].capitalize()
-        self.subject_from = form_params['subject_from'].capitalize()
-        self.subject_type_from = value_to_subject_dict[
-            form_params['subject_type_from']].capitalize()
-        self.city_to = form_params['city_to'].capitalize()
-        self.subject_to = form_params['subject_to'].capitalize()
-        self.subject_type_to = value_to_subject_dict[
-            form_params['subject_type_to']].capitalize()
+    def __init__(self, weight, length, width, height,
+                 cost, city_from, city_to):
+        self.weight = weight
+        self.length = length
+        self.width = width
+        self.height = height
+        self.cost = cost
+        self.city_from = city_from
+        self.city_to = city_to
         self.volume = self.width * self.height * self.length
-        self.ditance = 10
+
+
+class CalculateLPost(CalculationDelivery):
+    def __init__(self, weight, length, width, height,
+                 cost, city_from, city_to):
+        super().__init__(weight, length, width, height,
+                         cost, city_from, city_to)
 
     def find_coordinates(self, place):
         geocoder_params = {
-            'apikey': '40d1649f-0493-4b70-98ba-98533de7710b',
+            'apikey': settings.YANDEX_MAPS_API_KEY,
             'geocode': place,
             'format': 'json'}
         response = requests.get(
@@ -46,7 +41,19 @@ class CalculationDelivery:
         toponym_lattitude = float(toponym_coodrinates.split(' ')[1])
         return toponym_longitude, toponym_lattitude
 
-    def calculate_l_post(self):
+    def get_is_sklad(self):
+        response = requests.get('https://l-post.ru/l-backend/calc/'
+                                'get-id-sklad',
+                                params={'cityFrom': self.city_from},
+                                cookies=additions_lpost.cookies,
+                                headers=additions_lpost.headers,)
+
+        resp_text = response.text
+
+        dict_of_response = json.loads(resp_text)
+        return dict_of_response['id_sklad']
+
+    def get_response_from_lpost(self):
         box_params = {
             'weight': self.weight,
             'length': self.length,
@@ -54,29 +61,17 @@ class CalculationDelivery:
             'height': self.height,
             'quantity': 1,
         }
-        place = f'{self.subject_to} {self.subject_type_to}, {self.city_to}'
-        toponym_longitude, toponym_lattitude = self.find_coordinates(place)
 
-        params = {
-            'cityFrom': self.city_from,
-        }
+        toponym_longitude, toponym_lattitude = self.find_coordinates(
+            self.city_to)
 
-        response = requests.get('https://l-post.ru/l-backend/calc/'
-                                'get-id-sklad',
-                                params=params,
-                                cookies=additions_lpost.cookies,
-                                headers=additions_lpost.headers,)
-
-        resp_text = response.text
-
-        dict_of_response = json.loads(resp_text)
-        id_sklad = dict_of_response['id_sklad']
+        id_sklad = self.get_is_sklad()
 
         json_data = {
             'Calculator': {
                 'cityFrom': self.city_from,
                 'cityTo': self.city_to,
-                'cityToWithRegion': place,
+                'cityToWithRegion': self.city_to,
                 'boxes': [
                     {
                         'size': 'custom',
@@ -96,6 +91,7 @@ class CalculationDelivery:
                 'distance': 10,
             },
         }
+
         response = requests.post('https://l-post.ru/api/get-services'
                                  '-by-coordinates/',
                                  cookies=additions_lpost.cookies,
@@ -104,7 +100,11 @@ class CalculationDelivery:
 
         resp_text = response.text
 
-        dict_of_response = json.loads(resp_text)
+        return json.loads(resp_text)
+
+    def calculate_l_post(self):
+        dict_of_response = self.get_response_from_lpost()
+
         courier_cost = dict_of_response['services'][1]['sum_cost']
         day_logistic = dict_of_response['services'][0]['day_logistic']
         to_post_cost = dict_of_response['services'][0]['sum_cost']
@@ -118,19 +118,30 @@ class CalculationDelivery:
             day_logistic_courier = 'срок меньше дня'
         else:
             day_logistic_courier = day_logistic - 1
-        delivery_lpost = [f'До почтового отделения: за {day_logistic}'
-                          f'(количество дней) за {courier_cost} рублей',
-                          f'До двери: от {day_logistic_courier}'
-                          f'(количество дней) за {to_post_cost} рублей'
+        delivery_lpost = [f'за {day_logistic}(количество дней) '
+                          f'за {courier_cost} рублей',
+                          f'от {day_logistic_courier}(количество дней) '
+                          f'за {to_post_cost} рублей'
                           ]
         return delivery_lpost
 
-    def calculate_boxberry(self):
+
+class CalculateBoxberry(CalculationDelivery):
+    def __init__(self, weight, length, width, height,
+                 cost, city_from, city_to):
+        super().__init__(weight, length, width, height,
+                         cost, city_from, city_to)
+
+    def get_sities_code(self):
         with open('delivery/AdditionalsDeliveryServices/sities_code.json', 'r',
                   encoding='utf8') as read_file:
             cities_name_to_code = json.load(read_file)
         city_from = cities_name_to_code[self.city_from.lower()]
         city_to = cities_name_to_code[self.city_to.lower()]
+        return city_from, city_to
+
+    def get_response_from_boxberry(self):
+        city_from, city_to = self.get_sities_code()
         params = {
             'method': 'TarificationLaP',
             'sender_city': city_from,
@@ -147,10 +158,15 @@ class CalculationDelivery:
             cookies=additionals_boxberry.cookies,
             headers=additionals_boxberry.headers,
         )
-        dict_of_response = json.loads(resp_text.text)
+        return json.loads(resp_text.text)
+
+    def calculate_boxberry(self):
+        dict_of_response = self.get_response_from_boxberry()
+
         coutier_delivery_cost = dict_of_response['data'][0][
             'default_services_cost'] / 100
         coutier_delivery_day = int(dict_of_response['data'][0]['time'])
+
         if coutier_delivery_day - 1 == 0:
             post_delivery_day = 'меньше дня'
         else:
@@ -158,9 +174,9 @@ class CalculationDelivery:
         if int(coutier_delivery_cost) == float(coutier_delivery_cost):
             coutier_delivery_cost = int(coutier_delivery_cost)
         delivery_boxberry = [
-            f'До почтового отделения: за {coutier_delivery_day}'
-            f'(количество дней) за {coutier_delivery_cost} рублей',
-            f'До двери: от {post_delivery_day}'
-            f'(количество дней) за {coutier_delivery_cost + 200} рублей'
+            f'за {coutier_delivery_day}(количество дней) '
+            f'за {coutier_delivery_cost} рублей',
+            f'от {post_delivery_day}(количество дней) '
+            f'за {coutier_delivery_cost + 200} рублей'
         ]
         return delivery_boxberry
