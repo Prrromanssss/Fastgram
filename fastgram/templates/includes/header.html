@@ -5,7 +5,14 @@
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img src={% static 'img/mainicon.png' %} class="bi me-2" width="52" height="44" role="img" aria-label="Bootstrap"></img>
+          <img
+            src={% static 'img/mainicon.png' %}
+            class="bi me-2"
+            width="52"
+            height="44"
+            alt="Иконка сайта"
+            aria-label="Bootstrap"
+          >
         </a>
         {% with request.resolver_match.view_name as view_name %}
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -41,8 +48,10 @@
                         height="{{ im.height }}"
                         class="rounded-circle z-depth-0 dropdown-toggle"
                         role="button"
+                        alt="Фото профиля"
                         data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                        aria-expanded="false"
+                        >
                     {% endthumbnail %}
                   {% else %}
                   <img src="{% static 'img/blank-avatar.jpeg' %}"
@@ -50,10 +59,12 @@
                     height="32"
                     class="rounded-circle z-depth-0 dropdown-toggle"
                     role="button"
+                    alt="Фото профиля"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                  >
                   {% endif %}
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu">
                       {% if view_name != 'users:profile' %}
                         <a href="{% url 'users:profile' %}" class="dropdown-item text-dark" style="color: #26ded2">Профиль</a>
                       {% endif %}

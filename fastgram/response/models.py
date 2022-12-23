@@ -2,37 +2,52 @@ from ckeditor.fields import RichTextField
 from core.models import ImageBaseModel, NameBaseModel
 from django.db import models
 from django.urls import reverse
+
 from response.managers import CommentManager, ResponseManager
 from users.models import CustomUser
 
 
+class Delivery(NameBaseModel):
+    another_link = models.URLField(
+        'другие отзывы',
+        max_length=200,
+        null=True,
+        blank=True,
+        help_text='Добавьте ссылку на сайт с отзывами об этой службе',
+        )
+
+    class Meta:
+        verbose_name = 'курьерская служба'
+        verbose_name_plural = 'курьерские службы'
+
+
 class Response(NameBaseModel):
     delivery = models.ForeignKey(
-        'Delivery',
+        Delivery,
         verbose_name='курьерская служба',
         on_delete=models.CASCADE,
         help_text='Выберите курьерскую службу',
-    )
+        )
     text = RichTextField(
         'описание',
         help_text='Подробно расскажите о впечатлениях от данной'
         ' курьерской службы',
-    )
+        )
     created_on = models.DateTimeField(
         'дата написания',
         auto_now_add=True,
-    )
+        )
     user = models.ForeignKey(
         CustomUser,
         verbose_name='пользователь',
         on_delete=models.CASCADE,
         related_name='user_response',
-    )
+        )
     likes = models.ManyToManyField(
         CustomUser,
         verbose_name='лайк',
         blank=True,
-    )
+        )
 
     class Grades(models.IntegerChoices):
         NEGATIVE = 1, 'Отрицательная'
@@ -44,7 +59,7 @@ class Response(NameBaseModel):
         choices=Grades.choices,
         blank=True,
         null=True,
-    )
+        )
 
     objects = ResponseManager()
 
@@ -57,27 +72,13 @@ class Response(NameBaseModel):
         return reverse('response:response_detail', kwargs={'pk': self.pk})
 
 
-class Delivery(NameBaseModel):
-    another_link = models.URLField(
-        'другие отзывы',
-        max_length=200,
-        null=True,
-        blank=True,
-        help_text='Добавьте ссылку на сайт с отзывами об этой службе',
-    )
-
-    class Meta:
-        verbose_name = 'курьерская служба'
-        verbose_name_plural = 'курьерские службы'
-
-
 class MainImage(ImageBaseModel):
     response = models.OneToOneField(
-        'Response',
+        Response,
         verbose_name='отзыв',
         on_delete=models.CASCADE,
         null=True,
-    )
+        )
 
     class Meta:
         verbose_name = 'изображение'
@@ -88,17 +89,17 @@ class Comment(models.Model):
     text = RichTextField(
         'текст',
         help_text='Напишите свой комментарий',
-    )
+        )
     user = models.ForeignKey(
         CustomUser,
         verbose_name='пользователь',
         on_delete=models.CASCADE,
-    )
+        )
     response = models.ForeignKey(
         Response,
         verbose_name='отзыв',
         on_delete=models.CASCADE,
-    )
+        )
 
     objects = CommentManager()
 

@@ -17,7 +17,7 @@ class FeedbackForm(forms.ModelForm):
             Feedback.name.field.name,
         )
         widgets = {
-            'text': forms.Textarea(attrs={
+            Feedback.text.field.name: forms.Textarea(attrs={
                 'rows': 5,
             })
         }

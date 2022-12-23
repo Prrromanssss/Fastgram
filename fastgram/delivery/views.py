@@ -12,7 +12,6 @@ class DeliveryView(FormView):
     template_name = 'delivery/delivery.html'
     model = Delivery
     form_class = DeliveryForm
-    context_object_name = 'form'
     success_url = reverse_lazy('delivery:show')
 
     def get_context_data(self, **kwargs):

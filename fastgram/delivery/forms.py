@@ -12,9 +12,3 @@ class DeliveryForm(forms.ModelForm):
     class Meta:
         model = Delivery
         fields = '__all__'
-
-        widgets = {
-            'text': forms.Textarea(attrs={
-                'rows': 5,
-            })
-        }

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Prefetch
+
 from users.models import CustomUser
 
 
@@ -13,9 +14,8 @@ class ResponseManager(models.Manager):
                     'likes',
                     queryset=CustomUser.objects.all(),
                     to_attr='response_likes',
-                ),
-
-            )
+                    ),
+                )
             .only(
                 'name',
                 'text',
@@ -26,8 +26,8 @@ class ResponseManager(models.Manager):
                 'mainimage__image',
                 'user__email',
                 'user__image',
+                )
             )
-        )
 
 
 class CommentManager(models.Manager):
@@ -42,4 +42,4 @@ class CommentManager(models.Manager):
                 'response__id',
                 'user__email',
                 )
-        )
+            )

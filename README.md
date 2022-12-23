@@ -45,12 +45,7 @@ pip install -r requirements.txt
 
 ### 5. Making migrations
 
-5.1 To make migrations run this command
-
-```commandline
-python fastgram/manage.py makemigrations
-```
-5.2 To apply your migrations run this command
+5.1 To apply your migrations run this command
 ```commandline
 python fastgram/manage.py migrate
 ```

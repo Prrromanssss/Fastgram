@@ -31,7 +31,7 @@ class ResponseForm(forms.ModelForm):
             Response.grade.field.name,
         )
         widgets = {
-            'text': forms.Textarea(attrs={
+            Response.text.field.name: forms.Textarea(attrs={
                 'rows': 5,
             }),
         }
