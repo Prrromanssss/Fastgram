@@ -2,7 +2,11 @@
 
 ![flake8 tests](https://github.com/Prrromanssss/Fastgram/actions/workflows/flake8-linter.yml/badge.svg)
 
+![Image of the responses](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/responses.png)
 
+![Image of the analyzed delivery 1](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/delivery-1.png)
+
+![Image of the analyzed delivery 2](https://github.com/Prrromanssss/Fastgram/raw/main/media-for-README/delivery-2.png)
 
 ## Deployment instructions
 
