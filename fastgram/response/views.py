@@ -20,14 +20,15 @@ class ListResponsesView(FormMixin, ListView):
 
     def get_queryset(self):
         queryset = Response.objects.list_responses()
-        searched = self.request.GET.get('searched', '')
+        searched = self.request.GET.get('searched', '').lower()
+        print(searched)
         if searched:
             queryset = (
                 queryset.
                 filter(
-                    Q(name__contains=searched)
-                    | Q(delivery__name__contains=searched)
-                    | Q(text__contains=searched)
+                    Q(name__icontains=searched)
+                    | Q(delivery__name__icontains=searched)
+                    | Q(text__icontains=searched)
                     )
                 )
         return queryset
